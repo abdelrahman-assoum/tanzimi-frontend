@@ -20,6 +20,7 @@ function InputField(props) {
           onInput={()=> {
             setClicked(`${styles.fieldInput} ${styles.clickedInput}`);
           }}
+          onChange={props.onChange}
         />
       </div>
     </>

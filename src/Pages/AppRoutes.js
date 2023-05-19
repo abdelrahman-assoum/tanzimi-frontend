@@ -1,11 +1,16 @@
 import { BrowserRouter, Route, Routes} from "react-router-dom"
 import React, { useEffect, useState } from 'react'
-import App from "../App"
 import Login from "./Login/Login"
-import Home from "./Home/Home"
+// import Home from "./Home/Home"
 import Register from "./Register/Register"
 import { UserContext } from "../UserContext"
 import Cookies from "js-cookie"
+import Dashboard from "./Dashboard/Dashboard"
+import Tasks from "./Tasks/Tasks"
+import Schedule from "./Schedule/Schedule"
+import PomodoroPage from "./Pomodoro/PomodoroPage"
+import Goals from "./Goals/Goals"
+import Journals from "./Journals/Journals"
 function AppRoutes() {
     const [token, setToken] =useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,10 +26,23 @@ function AppRoutes() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{token, isLoggedIn, setToken, setIsLoggedIn}}>
+      <UserContext.Provider
+        value={{ token, isLoggedIn, setToken, setIsLoggedIn }}
+      >
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+        </Routes>
+        <Routes>
+         {  token && 
+          <Route path="/" element={<Dashboard />}>
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/pomodoro" element={<PomodoroPage />} />
+            <Route path="/goals" element={<Goals />} />
+            <Route path="/journals" element={<Journals />} />
+          </Route>
+}
         </Routes>
         {/* <Routes>
             <Route path="/" element={<Home/>}/>

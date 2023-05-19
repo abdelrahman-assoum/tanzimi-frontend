@@ -3,9 +3,7 @@ import styles from "./button.module.css";
 
 function Button(props) {
   return (
-    <div className={styles.buttonComponent}>
-    <button type={props.type} className={styles.button}>{props.title}</button>
-    </div>
+    <button className={styles.mybutton}>{props.title}</button>
     )
 }
 
