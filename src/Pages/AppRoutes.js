@@ -32,9 +32,7 @@ function AppRoutes() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-        </Routes>
-        <Routes>
-         {  token && 
+        
           <Route path="/" element={<Dashboard />}>
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/schedule" element={<Schedule />} />
@@ -42,7 +40,6 @@ function AppRoutes() {
             <Route path="/goals" element={<Goals />} />
             <Route path="/journals" element={<Journals />} />
           </Route>
-}
         </Routes>
         {/* <Routes>
             <Route path="/" element={<Home/>}/>

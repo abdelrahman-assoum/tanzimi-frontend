@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -28,5 +29,5 @@ code {
   --light-gray: #b9b9b9;
   --blue1: #0668E1;
   --blue2: #0080FB;
-  --white: #fff
+  --white: #fff;
 }
