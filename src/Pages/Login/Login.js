@@ -55,7 +55,7 @@ function Login() {
       })
       .catch((error) => {
         console.log(error);
-        if(error.response.status){
+        if(error.response){
           toast.error(error.response.data.error);
         }else{
         toast.error(error.message || "An error occurred, please try again");

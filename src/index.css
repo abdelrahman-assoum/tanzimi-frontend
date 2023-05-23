@@ -4,7 +4,7 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden
+  overflow-x: hidden;
 }
 
 html {
@@ -23,7 +23,7 @@ code {
 :root {
  
 
-  --bg-color: #F6F8FF;
+  --bgColor: #F6F8FF;
   --black: #333;
   --gray: #777;
   --light-gray: #b9b9b9;

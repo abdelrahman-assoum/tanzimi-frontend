@@ -1,10 +1,9 @@
 import React from 'react'
-import Sidebar from '../../Components/Sidebar/Sidebar'
 
 function Dashboard() {
   return (
     <div>
-        <Sidebar/>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur maxime esse dicta soluta! Labore, blanditiis vero quidem, eveniet quae magnam recusandae eum ullam sequi dolorem iusto assumenda repudiandae iste nemo.
     </div>
   )
 }
