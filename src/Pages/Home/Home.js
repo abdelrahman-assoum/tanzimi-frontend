@@ -1,8 +1,12 @@
 import React from "react";
 import "./home.css";
+import TaskCard from "../../Components/TaskCard/TaskCard";
 
 function Home() {
-  return <div>Home</div>;
+  return <div>
+    testing
+    <TaskCard />
+  </div>;
 }
 
 export default Home;
