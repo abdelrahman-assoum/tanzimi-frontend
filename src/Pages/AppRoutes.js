@@ -12,10 +12,11 @@ import PomodoroPage from "./Pomodoro/PomodoroPage"
 import Goals from "./Goals/Goals"
 import Journals from "./Journals/Journals"
 import AppLayout from "../Components/AppLayout/AppLayout"
+import Logout from "./Logout/Logout"
 function AppRoutes() {
     const [token, setToken] =useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    
+    const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
     const authToken = Cookies.get("token");
     if (authToken) {
@@ -27,21 +28,29 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <UserContext.Provider
-        value={{ token, isLoggedIn, setToken, setIsLoggedIn }}
+        value={{
+          token,
+          isLoggedIn,
+          userInfo,
+          setToken,
+          setIsLoggedIn,
+          setUserInfo,
+        }}
       >
-          <Routes>
-            <Route path="/login" element={<Login />}  />
-            <Route path="/register" element={<Register />} />
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="/tasks" element={<Tasks />} />
-              <Route path="/schedule" element={<Schedule />} />
-              <Route path="/pomodoro" element={<PomodoroPage />} />
-              <Route path="/goals" element={<Goals />} />
-              <Route path="/journals" element={<Journals />} />
-            </Route>
-          </Routes>
-          {/* <Routes>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/pomodoro" element={<PomodoroPage />} />
+            <Route path="/goals" element={<Goals />} />
+            <Route path="/journals" element={<Journals />} />
+          </Route>
+        </Routes>
+        {/* <Routes>
             <Route path="/" element={<Home/>}/>
         </Routes> */}
       </UserContext.Provider>

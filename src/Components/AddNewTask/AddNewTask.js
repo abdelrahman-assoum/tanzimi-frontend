@@ -20,6 +20,8 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { useTheme } from "@mui/material";
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
+import axios from "axios";
+import Cookies from "js-cookie";
 // import { useTheme } from "@emotion/react";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -51,7 +53,7 @@ const labelOptions = [
 
 function AddNewTask(props) {
   const theme = useTheme();
-  const [taskName, setTaskName] = useState("")
+  const [taskName, setTaskName] = useState("");
   const [status, setStatus] = useState("To-do");
   const [priority, setPriority] = useState("Low");
   const [duration, setDuration] = useState(0);
@@ -61,8 +63,8 @@ function AddNewTask(props) {
   const [label, setLabel] = useState([]);
 
   const handleNameChange = (event) => {
-      setTaskName(event.target.value);
-    };
+    setTaskName(event.target.value);
+  };
   const handleStatusChange = (event) => {
     setStatus(event.target.value);
   };
@@ -80,13 +82,31 @@ function AddNewTask(props) {
       value = Math.round(Number(value) / 5) * 5; // Round to the nearest multiple of 5
     }
     setDuration(value);
-  }
+  };
   const handleDueDateChange = (event) => {
     setDueDate(event.target.value);
   };
   const handleLabelChange = (event) => {
     setLabel(event.target.value);
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const userId = Cookies.get('passport')
+    const newTask = {
+      title: taskName,
+      duration: duration,
+      status: status,
+      priority: priority,
+      dueDate: dueDate,
+      user: userId,
+      label: label,
+    };
+    props.onSubmit(newTask);
+
+    props.onClose();
+  };
+
   return (
     <>
       <Dialog open={props.open}>
@@ -337,7 +357,7 @@ function AddNewTask(props) {
         </DialogContent>
         <DialogActions>
           <SmallOutlined title="Close" onClick={props.onClose} />
-          <SmallButton title="+ Add" />
+          <SmallButton title="+ Add" onClick={handleSubmit} />
         </DialogActions>
       </Dialog>
     </>

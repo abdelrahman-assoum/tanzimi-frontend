@@ -13,7 +13,7 @@ import { Toaster, toast } from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
-  const { setToken, setIsLoggedIn } = useContext(UserContext);
+  const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -44,14 +44,15 @@ function Login() {
     axios
       .post(`${process.env.REACT_APP_URL}/users/login`, loginData)
       .then((response) => {
-        console.log(response);
         const authToken = response.data.token;
         setToken(authToken);
         setIsLoggedIn(true);
+        setUserInfo(response.data);
         setErrorMessage("");
-        console.log(response);
-        toast.success("Login successful!");
         Cookies.set("userToken", authToken, { expires: 1 }); //1day
+        Cookies.set("passport", response.data._id, { expires: 1 }); //1 day
+        navigate('/')
+        toast.success("Login successful!");
       })
       .catch((error) => {
         console.log(error);

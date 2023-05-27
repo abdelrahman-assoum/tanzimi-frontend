@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../../Components/Input/InputField";
 import LoginLogo from "../../Assets/Images/loginLogo.svg";
 import Logo from "../../Assets/Images/Logo.svg";
@@ -7,7 +7,9 @@ import Button from "../../Components/Button/Button";
 import Heading from "../../Components/heading/Heading";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
+import { UserContext } from "../../UserContext";
+import Cookies from "js-cookie";
 
 function Register() {
   const [newUser, setNewUser] = useState({
@@ -18,7 +20,7 @@ function Register() {
     password: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate()
   const handleSubmit = (e) => {
@@ -42,6 +44,7 @@ function Register() {
       errors.email = "Email address is invalid";
       toast.error("Email address is invalid");
     }
+
     if (!newUser.phoneNumber.trim()) {
       errors.phoneNumber = "Phone Number is required";
       toast.error("Phone Number is required");
@@ -64,8 +67,7 @@ function Register() {
     }
 
     setErrors(errors);
-    console.log(errors)
-    // toast.error(errors)
+    console.log(errors);
 
     if (Object.keys(errors).length === 0) {
       // Perform registration logic
@@ -73,17 +75,24 @@ function Register() {
         .post(`${process.env.REACT_APP_URL}/users/register`, newUser)
         .then((response) => {
           console.log(response);
-          navigate("/login");
+          setUserInfo(response.data.user);
+          setToken(response.data.token);
+          const authToken = response.data.token;
+          Cookies.set("userToken", authToken, { expires: 1 });
+          return navigate("/");
+        })
+        .then(() => {
           toast.success("Registration successful!");
         })
-        .catch((error)=>{
-              console.log(error);
-        })
-      console.log("Registration successful");
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
+
   return (
     <>
+      <Toaster />
       <div className={styles.registerPage}>
         <div className={styles.leftSide}>
           <img src={LoginLogo} alt="logo" />
