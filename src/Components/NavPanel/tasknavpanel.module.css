@@ -1,0 +1,46 @@
+.navPanel {
+        width: 100%;
+            border-left: 5px solid var(--blue2);
+            background: var(--white);
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+}
+.functions{
+    display: flex;
+}
+.functions div {
+    margin: 10px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.functions div svg {
+    fill: var(--light-gray);
+    cursor: pointer;
+}
+.navPanel .title {
+    font-size: 20px;
+        font-weight: 600;
+        color: var(--blue2);
+}
+.functions div:hover {
+    background-color: var(--blue2);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    transition: 0.5 ease;
+    -webkit-transition: 0.5 ease;
+    -moz-transition: 0.5 ease;
+    -ms-transition: 0.5 ease;
+    -o-transition: 0.5 ease;
+}
+.functions div:hover svg {
+    fill: var(--white);
+}

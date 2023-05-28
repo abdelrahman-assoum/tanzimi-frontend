@@ -7,8 +7,8 @@ function hexToRGBA(hex, alpha) {
   const b = parseInt(hex.substring(5, 7), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
-
 function Label(props) {
+  console.log(props);
   const backgroundOpacity = 0.2;
 
   const labelStyle = {
@@ -17,7 +17,7 @@ function Label(props) {
   };
 
   return (
-    <div className={styles.labelComponent} style={labelStyle}>
+    <div className={styles.labelComponent} id={props.id} style={labelStyle}>
       {props.labelName}
     </div>
   );

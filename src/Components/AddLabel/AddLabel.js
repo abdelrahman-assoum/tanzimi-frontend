@@ -25,8 +25,7 @@ function AddLabel(props) {
 
   const handleColorChange = (color) => {
     setSelectedColor(color.hex);
-  };
- 
+  }
  const handleSubmit = (event) => {
     event.preventDefault();
     const token = Cookies.get("userToken");
@@ -49,8 +48,8 @@ function AddLabel(props) {
       })
       .catch((err) => {
         console.log(err);
-        toast.error(err.message);
-        console.log(err.message);
+        toast.error(err.response.data.error);
+        console.log(err.response.data.error);
       });
     props.onClose();
 

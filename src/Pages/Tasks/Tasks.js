@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import SmallButton from "../../Components/SmallButton/SmallButton";
 import AddNewTask from "../../Components/AddNewTask/AddNewTask";
-import SmallOutlined from "../../Components/SmallButton/SmallOutlined";
 import useFetch from "../../Components/useFetch/useFetch";
 import TaskCard from "../../Components/TaskCard/TaskCard";
 import Cookies from "js-cookie";
@@ -10,6 +8,7 @@ import { Toaster, toast } from "react-hot-toast";
 import TaskHeading from "../../Components/TaskHeading/TaskHeading";
 import axios from "axios";
 import AddLabel from "../../Components/AddLabel/AddLabel";
+import TaskNavPanel from "../../Components/NavPanel/TaskNavPanel";
 
 function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -21,9 +20,9 @@ function Tasks() {
   const handleLabelDialogOpen = () => {
     setLabelDialogOpen(true);
   };
-    const handleLabelDialogClose = () => {
-      setLabelDialogOpen(false);
-    };
+  const handleLabelDialogClose = () => {
+    setLabelDialogOpen(false);
+  };
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
@@ -52,11 +51,9 @@ function Tasks() {
   const handleAddSubmit = (newTask) => {
     const token = Cookies.get("userToken");
     axios
-      .post(
-        `${process.env.REACT_APP_URL}/tasks/new/`,
-        newTask,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      .post(`${process.env.REACT_APP_URL}/tasks/new/`, newTask, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         console.log(response);
       })
@@ -77,8 +74,11 @@ function Tasks() {
     <>
       <div>
         <Toaster />
-        <SmallButton title="+ Add new task" onClick={handleDialogOpen} />
-        <SmallOutlined title="+ Create Label" onClick={handleLabelDialogOpen} />
+        <TaskNavPanel
+          title="Tasks List"
+          addNewTask={handleDialogOpen}
+          addNewLabel={handleLabelDialogOpen}
+        />
         <AddNewTask
           open={dialogOpen}
           onClose={handleDialogClose}
@@ -100,6 +100,7 @@ function Tasks() {
                     dueDate={e.dueDate}
                     duration={e.duration}
                     status={e.status}
+                    labels={e.labels}
                   />
                 ))}
             </div>
@@ -118,6 +119,7 @@ function Tasks() {
                     dueDate={e.dueDate}
                     duration={e.duration}
                     status={e.status}
+                    labels={e.labels}
                   />
                 ))}
             </div>
@@ -134,6 +136,7 @@ function Tasks() {
                     dueDate={e.dueDate}
                     duration={e.duration}
                     status={e.status}
+                    labels={e.labels}
                   />
                 ))}
             </div>

@@ -52,6 +52,8 @@ function Login() {
         Cookies.set("userToken", authToken, { expires: 1 }); //1day
         Cookies.set("passport", response.data._id, { expires: 1 }); //1 day
         navigate('/')
+      })
+      .then(()=> {
         toast.success("Login successful!");
       })
       .catch((error) => {

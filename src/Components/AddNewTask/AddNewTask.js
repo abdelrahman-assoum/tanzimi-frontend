@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
@@ -22,6 +21,7 @@ import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
 import Cookies from "js-cookie";
+import useFetch from "../useFetch/useFetch";
 // import { useTheme } from "@emotion/react";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -45,12 +45,6 @@ const priorityOptions = [
   { value: "High", color: "#D60F0F" }, // Red color for High
 ];
 
-const labelOptions = [
-  { value: "UI/UX", color: "#777" }, // Red color for To-do
-  { value: "WEB DEV", color: "#0080FB" }, // Blue color for In-Progress
-  { value: "Mobile", color: "#219629" }, // Green color for Done
-];
-
 function AddNewTask(props) {
   const theme = useTheme();
   const [taskName, setTaskName] = useState("");
@@ -60,8 +54,22 @@ function AddNewTask(props) {
   const [dueDate, setDueDate] = useState(
     new Date().toISOString().split("T")[0]
   );
-  const [label, setLabel] = useState([]);
 
+  const [label, setLabel] = useState([]);
+  const [labelId, setLabelId] = useState([]);
+  const userId = Cookies.get("passport");
+
+  const { data, isLoading, reFetch } = useFetch("/label/user", userId);
+
+  const labelOptions =
+    data?.userLabel?.map((e, i) => {
+      return {
+        name: e.name,
+        color: e.color,
+        id: e._id,
+      };
+    }) || [];
+  console.log(labelOptions);
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };
@@ -88,11 +96,20 @@ function AddNewTask(props) {
   };
   const handleLabelChange = (event) => {
     setLabel(event.target.value);
+    const selectedLabels = event.target.value;
+    const selectedLabelIds = selectedLabels.map((label) => {
+      const selectedOption = labelOptions.find(
+        (option) => option.name === label
+      );
+      return selectedOption.id;
+    });
+
+    // Store the selected label IDs in an array state
+    setLabelId(selectedLabelIds); // Replace `setSelectedLabelIds` with your state update function
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userId = Cookies.get('passport')
     const newTask = {
       title: taskName,
       duration: duration,
@@ -100,13 +117,13 @@ function AddNewTask(props) {
       priority: priority,
       dueDate: dueDate,
       user: userId,
-      label: label,
+      labels: labelId,
     };
     props.onSubmit(newTask);
 
     props.onClose();
   };
-
+  console.log(data);
   return (
     <>
       <Dialog open={props.open}>
@@ -318,8 +335,8 @@ function AddNewTask(props) {
                 <h4 style={{ fontWeight: "500", color: "#777" }}>Labels</h4>
               </div>
               <Select
-                labelId="priority-select-label"
-                id="priority-select"
+                labelId="label-select-label"
+                id="label-select"
                 value={label}
                 size="small"
                 multiple
@@ -328,27 +345,32 @@ function AddNewTask(props) {
                 input={<OutlinedInput id="select-priority" />}
                 renderValue={(selected) => (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={value}
-                        sx={{
-                          backgroundColor: getColor(value, labelOptions),
-                          color: "#fff",
-                        }}
-                      />
-                    ))}
+                    {selected.map((value) => {
+                      const color = getLabelColor(value, labelOptions);
+                      console.log("color:", color);
+                      return (
+                        <Chip
+                          key={value}
+                          label={value}
+                          sx={{
+                            color: color,
+                            backgroundColor: hexToRGBA(color, 0.2),
+                          }}
+                        />
+                      );
+                    })}
                   </Box>
                 )}
                 MenuProps={MenuProps}
               >
                 {labelOptions.map((option) => (
                   <MenuItem
-                    key={option.value}
-                    value={option.value}
-                    style={{ color: option.color }}
+                    key={option.id}
+                    id={option.id}
+                    value={option.name}
+                    style={{ color: `#${option.color}` }}
                   >
-                    {option.value}
+                    {option.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -372,3 +394,26 @@ function getColor(index, options) {
   );
   return selectedOptions.map((option) => option.color);
 }
+
+function getLabelColor(index, options) {
+  const selectedOptions = options.filter((option) =>
+    index.includes(option.name)
+  );
+  console.log(selectedOptions);
+  console.log(selectedOptions.map((option) => option.color));
+  return selectedOptions.map((option) => ` #${option.color}`);
+}
+function hexToRGBA(hex, alpha) {
+  const hexValue = Array.isArray(hex) ? hex[0] : hex; // Get the hex value from the array if it's an array
+  const sanitizedHex = hexValue.trim(); // Remove any leading/trailing whitespace
+  const hexWithoutHash = sanitizedHex.substring(1); // Remove the leading hash character (#)
+  const r = parseInt(hexWithoutHash.substring(0, 2), 16); // Parse the red component
+  const g = parseInt(hexWithoutHash.substring(2, 4), 16); // Parse the green component
+  const b = parseInt(hexWithoutHash.substring(4, 6), 16); // Parse the blue component
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`; // Return the RGBA value
+}
+
+// const labelStyle = {
+//   color: props.color,
+//   background: hexToRGBA(props.color, backgroundOpacity),
+// };

@@ -1,4 +1,8 @@
 .Tasks {
     display: flex; 
     gap: 40px;  
+    padding: 10px 40px;
+    justify-content: space-between;
+    margin: 0 20px;
+    overflow-x: scroll;
 }
