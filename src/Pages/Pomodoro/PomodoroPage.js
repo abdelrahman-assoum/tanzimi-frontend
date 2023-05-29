@@ -1,7 +1,12 @@
 import React from "react";
+import Loading from "../../Components/Loading/Loading";
 
 function PomodoroPage() {
-  return <div>PomodoroPage</div>;
+  return (
+    <div>
+      <Loading />
+    </div>
+  );
 }
 
 export default PomodoroPage;
