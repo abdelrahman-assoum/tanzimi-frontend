@@ -8,7 +8,6 @@ function hexToRGBA(hex, alpha) {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 function Label(props) {
-  console.log(props);
   const backgroundOpacity = 0.2;
 
   const labelStyle = {

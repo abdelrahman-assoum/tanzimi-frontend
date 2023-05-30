@@ -1,0 +1,33 @@
+.journalCard {
+    padding: 32px;
+        width: 280px;
+        height: 280px;
+        border-radius: 20px;
+        background-color: blueviolet;
+        color: white;
+            display: flex;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+}
+.editCircle {
+        display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            padding: 5px;
+            border-radius: 50%;
+}
+.journalInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.journalInfo span {
+    font-size: 12px;
+}
+.journalParagraph{
+    height: 170px;
+    overflow: hidden;
+}

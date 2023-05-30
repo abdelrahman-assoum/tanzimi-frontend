@@ -44,3 +44,6 @@
 .functions div:hover svg {
     fill: var(--white);
 }
+.editIcon , .deleteIcon {
+    fill: var(--light-gray);
+}

@@ -69,7 +69,7 @@ function AddNewTask(props) {
         id: e._id,
       };
     }) || [];
-  console.log(labelOptions);
+  // console.log(labelOptions);
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };
@@ -123,7 +123,6 @@ function AddNewTask(props) {
 
     props.onClose();
   };
-  console.log(data);
   return (
     <>
       <Dialog open={props.open}>
@@ -347,7 +346,6 @@ function AddNewTask(props) {
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {selected.map((value) => {
                       const color = getLabelColor(value, labelOptions);
-                      console.log("color:", color);
                       return (
                         <Chip
                           key={value}
@@ -399,8 +397,8 @@ function getLabelColor(index, options) {
   const selectedOptions = options.filter((option) =>
     index.includes(option.name)
   );
-  console.log(selectedOptions);
-  console.log(selectedOptions.map((option) => option.color));
+  // console.log(selectedOptions);
+  // console.log(selectedOptions.map((option) => option.color));
   return selectedOptions.map((option) => ` #${option.color}`);
 }
 function hexToRGBA(hex, alpha) {

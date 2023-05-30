@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./check.module.css"
 import { Toaster, toast } from "react-hot-toast";
-function CheckboxIcon({ variant }) {
+import axios from "axios";
+import Cookies from "js-cookie";
+function CheckboxIcon({ variant , taskId, changingStatus }) {
   const [currentVariant, setCurrentVariant] = useState(variant);
-
   let svgCode = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_214_169" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                 <rect width="24" height="24" fill="#D9D9D9"/>
@@ -42,24 +43,46 @@ function CheckboxIcon({ variant }) {
 </svg>
 `;
   }
-
-  const handleClick = () => {
+  const token = Cookies.get('userToken');
+  const handleCheckboxClick = () => {
+    let updatedVariant;
     if (currentVariant === "To-do") {
-      setCurrentVariant("In-Progress");
-      toast.success('Task In Progress')
-    }else if (currentVariant === "In-Progress") {
-      setCurrentVariant("Done");
-      toast.success("Task Done");
-
+      updatedVariant = "In-Progress";
+    } else if (currentVariant === "In-Progress") {
+      updatedVariant = "Done";
+    } else if (currentVariant === "Done") {
+      updatedVariant = 'Done';
     }
+
+    setCurrentVariant(updatedVariant);
+    if (currentVariant === "In-Progress" || currentVariant === "To-do") {
+      axios
+        .put(
+          `${process.env.REACT_APP_URL}/tasks/edit/${taskId}`,
+          { status: updatedVariant },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
+          changingStatus();
+          toast.success(`Task ${updatedVariant}`);
+        })
+        .catch((error) => {
+          // Handle error
+          console.error(error);
+          toast.error("An error occurred.");
+        });
+      }
   };
+
 
   return (
     <>
       <Toaster />
       <div
         className={styles.checkbox}
-        onClick={handleClick}
+        onClick={handleCheckboxClick}
         dangerouslySetInnerHTML={{ __html: svgCode }}
         style={{
           cursor: currentVariant !== "Done" ? "pointer" : "default",

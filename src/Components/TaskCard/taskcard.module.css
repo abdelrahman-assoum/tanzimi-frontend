@@ -39,3 +39,33 @@ display: flex;
     display: flex;
     ;
 }
+.taskDeleteIcon, .taskEditIcon{
+    width: 32px;
+    height: 32px;
+    display: flex;
+        align-items: center;
+        justify-content: center;
+}
+.taskDeleteIcon svg,.taskEditIcon svg {
+    fill: var(--light-gray);
+}
+.taskDeleteIcon:hover {
+    
+    background-color: #e20f0f;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        transition: 0.5 ease;
+        -webkit-transition: 0.5 ease;
+        -moz-transition: 0.5 ease;
+        -ms-transition: 0.5 ease;
+        -o-transition: 0.5 ease;
+    
+}
+
+.taskDeleteIcon:hover svg,
+.taskEditIcon:hover svg {
+    fill: var(--white);
+}

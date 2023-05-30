@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Label from "../Labels/Label";
 import styles from "./taskcard.module.css";
 import CheckboxIcon from "../CheckboxIcon/CheckboxIcon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteDialog from "../DeleteDialog/DeleteDialog";
 
 function TaskCard(props) {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const handleDeleteDialogClose = () => {
+    setDeleteDialogOpen(false);
+  }
   return (
     <>
       <div className={styles.taskComponent} id={props.id}>
@@ -38,8 +43,37 @@ function TaskCard(props) {
           </div>
         </div>
         <div className={styles.taskCheck}>
-
-          <CheckboxIcon variant={props.status} />
+          {props.buttonType === "checkbox" ? (
+            <CheckboxIcon
+              variant={props.status}
+              taskId={props.id}
+              changingStatus={props.changingStatus}
+            />
+          ) : props.buttonType === "edit" ? (
+            <>
+              <EditIcon className={styles.taskEditIcon} />
+            </>
+          ) : props.buttonType === "delete" ? (
+            <div className={styles.taskDeleteIcon}>
+              <DeleteIcon
+                onClick={() => {
+                  setDeleteDialogOpen(true);
+                }}
+              />
+              <DeleteDialog
+                open={deleteDialogOpen}
+                onClose={handleDeleteDialogClose}
+                taskId={props.id}
+                changingStatus={props.changingStatus}
+              />
+            </div>
+          ) : (
+            <CheckboxIcon
+              variant={props.status}
+              taskId={props.id}
+              changingStatus={props.changingStatus}
+            />
+          )}
         </div>
       </div>
     </>

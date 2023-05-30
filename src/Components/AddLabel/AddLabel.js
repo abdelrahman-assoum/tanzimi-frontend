@@ -35,7 +35,7 @@ function AddLabel(props) {
         color: selectedColor.split("#")[1],
         user: userId,
     }
-    console.log(newLabel)
+    // console.log(newLabel)
     axios
       .post(
         `${process.env.REACT_APP_URL}/label/new/`, newLabel,
@@ -43,13 +43,13 @@ function AddLabel(props) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
-          console.log(response);
+          // console.log(response);
           toast.success(response.data.message);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         toast.error(err.response.data.error);
-        console.log(err.response.data.error);
+        // console.log(err.response.data.error);
       });
     props.onClose();
 
