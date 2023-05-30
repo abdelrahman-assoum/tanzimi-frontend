@@ -11,8 +11,10 @@ import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
+import useFetch from "../useFetch/useFetch";
 
 function DeleteDialog(props) {
+ 
   const handleDelete = (event) => {
     event.preventDefault();
     const token = Cookies.get("userToken");
@@ -33,6 +35,7 @@ function DeleteDialog(props) {
       });
     props.onClose();
   };
+
 
   return (
     <>

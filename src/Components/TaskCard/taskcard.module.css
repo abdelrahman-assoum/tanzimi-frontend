@@ -45,8 +45,12 @@ display: flex;
     display: flex;
         align-items: center;
         justify-content: center;
+    cursor: pointer;
 }
-.taskDeleteIcon svg,.taskEditIcon svg {
+.taskEditIcon {
+    fill: var(--light-gray);
+}
+.taskDeleteIcon svg, .taskEditIcon svg {
     fill: var(--light-gray);
 }
 .taskDeleteIcon:hover {

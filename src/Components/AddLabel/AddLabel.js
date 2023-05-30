@@ -45,6 +45,7 @@ function AddLabel(props) {
       .then((response) => {
           // console.log(response);
           toast.success(response.data.message);
+          props.reFetching();
       })
       .catch((err) => {
         // console.log(err);

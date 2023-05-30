@@ -10,31 +10,38 @@ import axios from "axios";
 import AddLabel from "../../Components/AddLabel/AddLabel";
 import TaskNavPanel from "../../Components/NavPanel/NavPanel";
 import Loading from "../../Components/Loading/Loading";
+import DeleteLabel from "../../Components/DeleteLabel/DeleteLabel";
 
 function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [labelDialogOpen, setLabelDialogOpen] = useState(false);
+  const [deleteLabelOpen, setDeleteLabelOpen] = useState(false);
   const [buttonType, setButtonType] = useState("checkbox");
   const userId = Cookies.get("passport");
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
+
   const handleLabelDialogOpen = () => {
     setLabelDialogOpen(true);
   };
   const handleLabelDialogClose = () => {
     setLabelDialogOpen(false);
   };
+  const handleDeleteLabelOpen = () => {
+    setDeleteLabelOpen(true);
+  };
+
   const handleButtonTypeChange = (type) => {
     setButtonType(type);
-  }
+  };
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
   const { data, isLoading, reFetch } = useFetch("/tasks/user", userId);
-   const handleChangingStatus = () => {
-    //  reFetch();
-   };
+  const handleChangingStatus = () => {
+    reFetch();
+  };
   console.log(data);
   const todoTask =
     data && data.userTasks
@@ -55,7 +62,7 @@ function Tasks() {
           return e.status === "Done";
         })
       : [];
-
+  console.log(ProgressTask);
   const handleAddSubmit = (newTask) => {
     const token = Cookies.get("userToken");
     axios
@@ -84,6 +91,7 @@ function Tasks() {
               title="Tasks List"
               addNewTask={handleDialogOpen}
               addNewLabel={handleLabelDialogOpen}
+              deleteLabel={handleDeleteLabelOpen}
               buttonType={buttonType}
               buttonTypeChange={handleButtonTypeChange}
               panelType="tasks"
@@ -93,7 +101,15 @@ function Tasks() {
               onClose={handleDialogClose}
               onSubmit={handleAddSubmit}
             />
-            <AddLabel open={labelDialogOpen} onClose={handleLabelDialogClose} />
+            <AddLabel
+              open={labelDialogOpen}
+              onClose={handleLabelDialogClose}
+              reFetching={handleChangingStatus}
+            />
+            <DeleteLabel
+              open={deleteLabelOpen}
+              onClose={() => setDeleteLabelOpen(false)}
+            />
             <div className={styles.Tasks}>
               <div className={styles.ToDoTasks}>
                 {todoTask && (
@@ -110,6 +126,7 @@ function Tasks() {
                         duration={e.duration}
                         status={e.status}
                         labels={e.labels}
+                        priority={e.priority}
                         buttonType={buttonType}
                         changingStatus={handleChangingStatus}
                       />
@@ -132,6 +149,7 @@ function Tasks() {
                         title={e.title}
                         dueDate={e.dueDate}
                         duration={e.duration}
+                        priority={e.priority}
                         status={e.status}
                         labels={e.labels}
                         buttonType={buttonType}
@@ -151,6 +169,7 @@ function Tasks() {
                         key={i}
                         id={e._id}
                         title={e.title}
+                        priority={e.priority}
                         dueDate={e.dueDate}
                         duration={e.duration}
                         status={e.status}
