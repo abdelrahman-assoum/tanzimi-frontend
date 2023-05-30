@@ -1,0 +1,32 @@
+.completedTasks {
+    background-color: var(--white);
+    max-width: 400px;
+    width: 100% ;
+    border-radius: 15px;
+    border-left: 20px solid var(--blue2);
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    height: 180px;
+    overflow: hidden;
+}
+.completedTasks .title {
+    font-size: 20px;
+    width: fit-content;
+    margin: 20px 30px;
+}
+.image {
+    position: relative;
+}
+.image img {
+    opacity: 50%;
+    position: absolute;
+    right: -20%;
+    top: -30px;
+}
+.completedTasks .counter {
+    margin: 30px 40px;
+    font-size: 64px;
+    color: var(--blue2);
+}

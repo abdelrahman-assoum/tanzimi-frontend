@@ -1,0 +1,30 @@
+.smallButton {
+    background-color: var(--blue2);
+    color: var(--white);
+    border: none;
+    width: 180px;
+    height: 50px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.smallButtonOutlined{
+    background-color: var(--white);
+    color: var(--blue2);
+    border: none;
+    width: 180px;
+    height: 50px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    font-size: 16px;
+    border: 2px solid var(--blue2);
+    cursor: pointer;
+}
+

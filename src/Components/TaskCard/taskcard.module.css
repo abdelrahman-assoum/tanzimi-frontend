@@ -1,0 +1,71 @@
+.taskComponent{
+display: flex;
+    width: 320px;
+    margin: 0;
+    background: var(--white);
+    margin: 20px 0;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+    border-left: 20px solid var(--blue2);
+    border-radius: 20px;
+}
+.taskDescription {
+    display: flex;
+    flex-direction: column;
+}
+.taskDescription h4 {
+    margin: 5px 0;
+}
+.taskInfo {
+    margin: 5px 0;
+    display: flex;
+}
+.taskInfo svg {
+    fill: var(--gray);
+    width: 20px;
+}
+.taskInfo div {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.taskInfo div h6 {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--gray);
+}
+.taskLabels {
+    display: flex;
+    ;
+}
+.taskDeleteIcon, .taskEditIcon{
+    width: 32px;
+    height: 32px;
+    display: flex;
+        align-items: center;
+        justify-content: center;
+}
+.taskDeleteIcon svg,.taskEditIcon svg {
+    fill: var(--light-gray);
+}
+.taskDeleteIcon:hover {
+    
+    background-color: #e20f0f;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+        transition: 0.5 ease;
+        -webkit-transition: 0.5 ease;
+        -moz-transition: 0.5 ease;
+        -ms-transition: 0.5 ease;
+        -o-transition: 0.5 ease;
+    
+}
+
+.taskDeleteIcon:hover svg,
+.taskEditIcon:hover svg {
+    fill: var(--white);
+}
