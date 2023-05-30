@@ -47,7 +47,10 @@ function NavPanel(props) {
                   />
                 </svg>
               </div>
-              <div className={styles.deleteLabel}>
+              <div
+                className={styles.deleteLabel}
+                onClick={props.deleteLabel}
+              >
                 <svg
                   id="delete-label-icon"
                   width="24"

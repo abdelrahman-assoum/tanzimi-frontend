@@ -5,12 +5,25 @@ import CheckboxIcon from "../CheckboxIcon/CheckboxIcon";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
+import EditTask from "../EditTask/EditTask";
 
 function TaskCard(props) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
   const handleDeleteDialogClose = () => {
     setDeleteDialogOpen(false);
-  }
+  };
+  const handleEditDialogClose = () => {
+    setEditDialogOpen(false);
+  };
+  const priorityData = props.priority;
+
+  const priorityOptions = [
+    { value: "Low", color: "#0080FB" }, // Blue color for Low
+    { value: "Medium", color: "#219629" }, // Green color for Medium
+    { value: "High", color: "#D60F0F" }, // Red color for High
+  ];
+
   return (
     <>
       <div className={styles.taskComponent} id={props.id}>
@@ -51,7 +64,24 @@ function TaskCard(props) {
             />
           ) : props.buttonType === "edit" ? (
             <>
-              <EditIcon className={styles.taskEditIcon} />
+              <EditIcon
+                className={styles.taskEditIcon}
+                onClick={() => {
+                  setEditDialogOpen(true);
+                }}
+              />
+              <EditTask
+                open={editDialogOpen}
+                onClose={handleEditDialogClose}
+                taskId={props.id}
+                changingStatus={props.changingStatus}
+                title={props.title}
+                status={props.status}
+                priority={props.priority}
+                labels={props.labels}
+                duration={props.duration}
+                dueDate={props.dueDate}
+              />
             </>
           ) : props.buttonType === "delete" ? (
             <div className={styles.taskDeleteIcon}>
