@@ -143,7 +143,7 @@ function AddNewTask(props) {
                   fontWeight: "600",
                 },
               }}
-              required
+              required={true}
               sx={{ marginBottom: "20px", width: "100%", fontSize: "64px" }}
             />
             <div

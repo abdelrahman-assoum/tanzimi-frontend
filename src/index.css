@@ -14,6 +14,7 @@ html {
   font-family: 'Poppins', sans-serif !important;
   box-sizing: border-box;
   text-decoration: none;
+  user-select: none;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -31,3 +32,4 @@ code {
   --blue2: #0080FB;
   --white: #fff;
 }
+

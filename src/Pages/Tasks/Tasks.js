@@ -4,11 +4,11 @@ import useFetch from "../../Components/useFetch/useFetch";
 import TaskCard from "../../Components/TaskCard/TaskCard";
 import Cookies from "js-cookie";
 import styles from "./tasks.module.css";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import TaskHeading from "../../Components/TaskHeading/TaskHeading";
 import axios from "axios";
 import AddLabel from "../../Components/AddLabel/AddLabel";
-import TaskNavPanel from "../../Components/NavPanel/NavPanel";
+import TaskNavPanel from "../../Components/NavPanel/TaskNavPanel";
 import Loading from "../../Components/Loading/Loading";
 import DeleteLabel from "../../Components/DeleteLabel/DeleteLabel";
 
@@ -16,6 +16,7 @@ function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [labelDialogOpen, setLabelDialogOpen] = useState(false);
   const [deleteLabelOpen, setDeleteLabelOpen] = useState(false);
+  
   const [buttonType, setButtonType] = useState("checkbox");
   const userId = Cookies.get("passport");
   const handleDialogOpen = () => {
@@ -39,10 +40,15 @@ function Tasks() {
     setDialogOpen(false);
   };
   const { data, isLoading, reFetch } = useFetch("/tasks/user", userId);
+  if(data !==null){
+
+  // console.log("FADI");
+  }
+
+
   const handleChangingStatus = () => {
     reFetch();
   };
-  console.log(data);
   const todoTask =
     data && data.userTasks
       ? data.userTasks.filter((e, i) => {
@@ -55,14 +61,13 @@ function Tasks() {
           return e.status === "In-Progress";
         })
       : [];
-
+  
   const DoneTask =
     data && data.userTasks
       ? data.userTasks.filter((e, i) => {
           return e.status === "Done";
         })
       : [];
-  console.log(ProgressTask);
   const handleAddSubmit = (newTask) => {
     const token = Cookies.get("userToken");
     axios
@@ -82,7 +87,6 @@ function Tasks() {
   return (
     <>
       <div>
-        <Toaster />
         {isLoading ? (
           <Loading />
         ) : (

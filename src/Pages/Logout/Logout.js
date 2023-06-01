@@ -8,6 +8,7 @@ function Logout() {
   useEffect(() => {
     const removeCookie = () => {
       Cookies.remove("userToken");
+      Cookies.remove("passport");
       navigate("/login");
     };
 

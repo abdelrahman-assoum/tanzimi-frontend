@@ -4,35 +4,31 @@ import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-hot-toast";
 
 const useFetch = (url, credential) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const token = Cookies.get("userToken");
 
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_URL}${url}/${credential}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setData(res.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      toast.error(err.response.data.message || err.message);
-      setError(err);
-      setIsLoading(false);
-    }
-  }, [url, credential, token]);
-
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const res = await axios.get(
+          `${process.env.REACT_APP_URL}${url}/${credential}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        setData(res.data);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err);
+      }
+    };
     fetchData();
-  }, [fetchData]);
+  }, []);
 
-  const reFetch = useCallback(async () => {
+  const reFetch = async () => {
     setIsLoading(true);
     try {
       const res = await axios.get(
@@ -46,8 +42,7 @@ const useFetch = (url, credential) => {
       setError(err);
     }
     setIsLoading(false);
-  }, [url, credential, token]);
-
+  };
   return { data, isLoading, error, reFetch };
 };
 

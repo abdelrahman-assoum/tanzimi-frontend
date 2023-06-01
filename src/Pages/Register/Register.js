@@ -7,7 +7,7 @@ import Button from "../../Components/Button/Button";
 import Heading from "../../Components/heading/Heading";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { UserContext } from "../../UserContext";
 import Cookies from "js-cookie";
 
@@ -92,7 +92,6 @@ function Register() {
 
   return (
     <>
-      <Toaster />
       <div className={styles.registerPage}>
         <div className={styles.leftSide}>
           <img src={LoginLogo} alt="logo" />

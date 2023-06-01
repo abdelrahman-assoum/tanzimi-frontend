@@ -5,19 +5,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import styles from "./tasknavpanel.module.css";
-function NavPanel(props) {
-  const handleAddClicked = () => {
-    props.addClick();
-    // props.actions(null);
-  };
+function TaskNavPanel(props) {
   const handleDeleteClicked = () => {
-    props.actions("delete");
+    props.buttonTypeChange("delete");
   };
   const handleCancel = () => {
-    props.actions(null);
+    props.buttonTypeChange("checkbox");
   };
+
   const handleEditClicked = () => {
-    props.actions("edit");
+    props.buttonTypeChange("edit");
   };
   return (
     <div>
@@ -26,7 +23,8 @@ function NavPanel(props) {
         <div className={styles.functions}>
           {props.buttonType === "delete" || props.buttonType === "edit" ? (
             <div className={styles.cancel}>
-              <CancelIcon onClick={handleCancel} />
+              {" "}
+              <CancelIcon onClick={handleCancel} />{" "}
             </div>
           ) : (
             ""
@@ -49,7 +47,10 @@ function NavPanel(props) {
                   />
                 </svg>
               </div>
-              <div className={styles.deleteLabel} onClick={props.deleteLabel}>
+              <div
+                className={styles.deleteLabel}
+                onClick={props.deleteLabel}
+              >
                 <svg
                   id="delete-label-icon"
                   width="24"
@@ -69,7 +70,7 @@ function NavPanel(props) {
           ) : (
             ""
           )}
-          <div className={styles.addTask} onClick={handleAddClicked}>
+          <div className={styles.addTask} onClick={props.addNewTask}>
             <AddCircleIcon />
           </div>
           <div className={styles.editTask}>
@@ -84,4 +85,4 @@ function NavPanel(props) {
   );
 }
 
-export default NavPanel;
+export default TaskNavPanel;
