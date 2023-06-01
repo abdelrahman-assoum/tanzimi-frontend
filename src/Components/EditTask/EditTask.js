@@ -134,7 +134,7 @@ function EditTask(props) {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        toast.success("Task added successfully");
+        toast.success("Task edited successfully");
         props.changingStatus();
       })
       .catch((err) => {

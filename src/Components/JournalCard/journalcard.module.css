@@ -4,19 +4,22 @@
         height: 280px;
         border-radius: 20px;
         background-color: blueviolet;
-        color: white;
+        color: var(--black);
             display: flex;
                 flex-direction: column;
                 flex-wrap: nowrap;
                 justify-content: space-between;
 }
-.editCircle {
+.iconCircle {
         display: flex;
             align-items: center;
             justify-content: center;
             background: var(--black);
             padding: 5px;
             border-radius: 50%;
+}
+.iconCircle svg {
+    fill: var(--white);
 }
 .journalInfo {
     display: flex;
@@ -29,5 +32,6 @@
 }
 .journalParagraph{
     height: 170px;
+    font-weight: 500;
     overflow: hidden;
 }

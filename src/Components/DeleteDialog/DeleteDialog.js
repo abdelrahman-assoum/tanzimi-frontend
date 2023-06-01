@@ -14,20 +14,18 @@ import { toast } from "react-hot-toast";
 import useFetch from "../useFetch/useFetch";
 
 function DeleteDialog(props) {
- 
   const handleDelete = (event) => {
     event.preventDefault();
     const token = Cookies.get("userToken");
     axios
-      .delete(
-        `${process.env.REACT_APP_URL}/tasks/delete/${props.taskId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+      .delete(`${process.env.REACT_APP_URL}${props.url}${props.deleteId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((response) => {
         console.log(response);
         console.log(props);
         toast.success(response.data.message);
-        props.changingStatus();
+        props.reFetching();
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +33,6 @@ function DeleteDialog(props) {
       });
     props.onClose();
   };
-
 
   return (
     <>
@@ -46,11 +43,11 @@ function DeleteDialog(props) {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {"Delete this Task?"}
+          {`Delete this ${props.dialogTitle}`}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure you want to delete this task ?
+            {`Are you sure you want to delete this ${props.dialogTitle} ?`}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

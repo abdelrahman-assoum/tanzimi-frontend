@@ -58,6 +58,7 @@ function TaskCard(props) {
         <div className={styles.taskCheck}>
           {props.buttonType === "checkbox" ? (
             <CheckboxIcon
+            
               variant={props.status}
               taskId={props.id}
               changingStatus={props.changingStatus}
@@ -93,8 +94,10 @@ function TaskCard(props) {
               <DeleteDialog
                 open={deleteDialogOpen}
                 onClose={handleDeleteDialogClose}
-                taskId={props.id}
-                changingStatus={props.changingStatus}
+                deleteId={props.id}
+                dialogTitle="Task"
+                reFetching={props.changingStatus}
+                url='/tasks/delete/'
               />
             </div>
           ) : (

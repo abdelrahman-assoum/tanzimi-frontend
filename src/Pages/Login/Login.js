@@ -9,11 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
-  const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
+  const { token, userId, setToken, setUserId } = useContext(UserContext);
+  // console.log('token', token);
+  // console.log("userId", userId);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -46,12 +48,12 @@ function Login() {
       .then((response) => {
         const authToken = response.data.token;
         setToken(authToken);
-        setIsLoggedIn(true);
-        setUserInfo(response.data);
+        setUserId(response.data._id);
+        // setUserId(response.data);
         setErrorMessage("");
         Cookies.set("userToken", authToken, { expires: 1 }); //1day
         Cookies.set("passport", response.data._id, { expires: 1 }); //1 day
-        navigate('/')
+        navigate('/app')
       })
       .then(()=> {
         toast.success("Login successful!");
@@ -68,7 +70,6 @@ function Login() {
   };
   return (
     <>
-      <Toaster />
       <div className={styles.loginPage}>
         <div className={styles.leftSideLogin}>
           <img src={LoginLogo} alt="logo" />

@@ -1,0 +1,9 @@
+.journalContainer {
+    margin: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px));
+    grid-gap: 20px;
+    align-items: center;        
+    /* justify-content: center; */
+    /* overflow: scroll; */
+}   
