@@ -1,34 +1,34 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styles from "./journalcard.module.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckIcon from "@mui/icons-material/Check";
+// import CheckIcon from "@mui/icons-material/Check";
 import { TextField } from "@mui/material";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
+import { AuthContext } from "../../context/authProvider";
 
 function JournalCard(props) {
   const [journalContent, setJournalContent] = useState(props.content);
   const [doneCheck, setDoneCheck] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const typingRef = useRef(props.typing || false);
   const IdRef = useRef(props.cardId);
-  //
-  const token = Cookies.get("userToken");
-  const userId = Cookies.get("passport");
-  // const
-  // const newJournal = useRef(false);
+  const { token, userInfo } = useContext(AuthContext);
+
+  const userId = userInfo && userInfo?._id;
   const options = {
     weekday: "short",
     day: "2-digit",
     month: "short",
     year: "numeric",
   };
-  const formattedDate = props.journalDate.toLocaleDateString("en-US", options);
-
+  console.log(props);
+  console.log(props.journalDate);
+  const journalDate = new Date(props.journalDate);
+  const formattedDate = journalDate.toLocaleDateString("en-US", options);
 
   const handleJorunalContent = (e) => {
     let content = e.target.value;
@@ -40,6 +40,7 @@ function JournalCard(props) {
     };
     props &&
       editedNote &&
+      token &&
       axios
         .put(
           `${process.env.REACT_APP_URL}/journal/edit/${props.cardId}`,
@@ -66,19 +67,24 @@ function JournalCard(props) {
       color: color,
       user: userId,
     };
-    axios.post(`${process.env.REACT_APP_URL}/journal/new`, newJournal, {
-      headers: { Authorization: `Bearer ${token}`}
-    }).then((res)=> {
-      console.log(res)
-      toast.success('Note Created Successfully');
-      props.reFetching();
-    }).catch((err)=> {
-      console.log(err)
-      toast.error(err.message);
-    });
+    if (token) {
+      axios
+        .post(`${process.env.REACT_APP_URL}/journal/new`, newJournal, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          console.log(res);
+          toast.success("Note Created Successfully");
+          props.reFetching();
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.error(err.message);
+        });
 
-    props.hideNew()
-  }
+      props.hideNew();
+    }
+  };
   const handleEditClick = (e) => {
     typingRef.current = true;
     // doneRef.current = true;

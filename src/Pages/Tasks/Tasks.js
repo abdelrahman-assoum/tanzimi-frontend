@@ -19,7 +19,6 @@ function Tasks() {
 
   const [buttonType, setButtonType] = useState("checkbox");
   const { userInfo, token, loading } = useContext(AuthContext);
-  // console.log(userInfo)
   const userId = userInfo && userInfo?._id;
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -77,7 +76,6 @@ function Tasks() {
         })
         .catch((err) => {
           toast.error(err.message);
-          console.log(err.message);
         });
     }
   };

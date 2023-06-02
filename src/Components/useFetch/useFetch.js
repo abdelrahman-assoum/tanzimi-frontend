@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/authProvider";
+import { AuthContext, TokenState } from "../../context/authProvider";
 
 const useFetch = (url, credential) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { token, userInfo, loading } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!loading) {
+    if (token) {
       const fetchData = async () => {
-        token && setIsLoading(true);
+        setIsLoading(true);
         try {
           const res = await axios.get(
             `${process.env.REACT_APP_URL}${url}/${credential}`,
@@ -27,7 +27,7 @@ const useFetch = (url, credential) => {
       };
       fetchData();
     }
-  }, [loading, token, url, credential]);
+  }, [token, url, credential]);
 
   const reFetch = async () => {
     try {

@@ -19,7 +19,7 @@ import { useTheme } from "@mui/material";
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import useFetch from "../useFetch/useFetch";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/authProvider";
@@ -47,7 +47,7 @@ const priorityOptions = [
 ];
 
 function EditTask(props) {
-    console.log(props)
+  console.log(props);
   //   const theme = useTheme();
   const [taskName, setTaskName] = useState(props.title);
   const [status, setStatus] = useState(props.status);
@@ -60,16 +60,19 @@ function EditTask(props) {
     props.labels.map((e, i) => {
       return e._id;
     });
-    const initialSelectedLabels = props.labels && props.labels.map((e, i) => {
+  const initialSelectedLabels =
+    props.labels &&
+    props.labels.map((e, i) => {
       return e.name;
     });
 
   const [label, setLabel] = useState(initialSelectedLabels);
   const [labelId, setLabelId] = useState(initialLabelIds);
-  const {token , loading, userInfo} = useContext(AuthContext)
+  const { token, userInfo } = useContext(AuthContext);
+
   const userId = userInfo && userInfo._id;
 
-  const { data, isLoading, reFetch } = useFetch("/label/user", userId);
+  const { data } = useFetch("/label/user", userId);
 
   const labelOptions =
     data?.userLabel?.map((e, i) => {
@@ -129,22 +132,23 @@ function EditTask(props) {
       user: userId,
       labels: labelId,
     };
-    const token = Cookies.get("userToken");
-    const taskId = props.taskId
-    axios
-      .put(`${process.env.REACT_APP_URL}/tasks/edit/${taskId}`, editedTask, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        toast.success("Task edited successfully");
-        props.changingStatus();
-      })
-      .catch((err) => {
-        toast.error(err.message);
-        console.log(err.message);
-      });
+    const taskId = props.taskId;
+    if (token) {
+      axios
+        .put(`${process.env.REACT_APP_URL}/tasks/edit/${taskId}`, editedTask, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          toast.success("Task edited successfully");
+          props.changingStatus();
+        })
+        .catch((err) => {
+          toast.error(err.message);
+          console.log(err.message);
+        });
 
-    props.onClose();
+      props.onClose();
+    }
   };
   return (
     <>
@@ -415,7 +419,7 @@ function getColor(index, options) {
   const selectedOptions = options.filter((option) =>
     index.includes(option.value)
   );
-//   console.log(selectedOptions.map((option) => option.color));
+  //   console.log(selectedOptions.map((option) => option.color));
   return selectedOptions.map((option) => option.color);
 }
 

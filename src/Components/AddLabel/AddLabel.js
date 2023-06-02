@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -11,14 +11,15 @@ import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { TwitterPicker } from "react-color";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../context/authProvider";
 
 
 function AddLabel(props) {
   const [labelName, setLabelName] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const {userInfo, token} = useContext(AuthContext)
   const handleNameChange = (event) => {
     setLabelName(event.target.value);
   };
@@ -28,14 +29,14 @@ function AddLabel(props) {
   }
  const handleSubmit = (event) => {
     event.preventDefault();
-    const token = Cookies.get("userToken");
-    const userId = Cookies.get("passport");
+      const userId = userInfo && userInfo?._id;
+
     const newLabel = {
         name: labelName,
         color: selectedColor.split("#")[1],
         user: userId,
     }
-    // console.log(newLabel)
+    if (token) {
     axios
       .post(
         `${process.env.REACT_APP_URL}/label/new/`, newLabel,
@@ -43,17 +44,14 @@ function AddLabel(props) {
         { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
-          // console.log(response);
           toast.success(response.data.message);
           props.reFetching();
       })
       .catch((err) => {
-        // console.log(err);
         toast.error(err.response.data.error);
-        // console.log(err.response.data.error);
       });
     props.onClose();
-
+    }
   };
 
   return (
@@ -93,7 +91,6 @@ function AddLabel(props) {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                // alignItems: "center",
                 justifyContent: "space-around",
                 marginBottom: "10px",
               }}

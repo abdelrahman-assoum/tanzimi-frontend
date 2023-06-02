@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import {
   Dialog,
   DialogActions,
@@ -17,21 +17,20 @@ function DeleteDialog(props) {
   const {token} = useContext(AuthContext)
   const handleDelete = (event) => {
     event.preventDefault();
+    if(token) {
     axios
       .delete(`${process.env.REACT_APP_URL}${props.url}${props.deleteId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response);
-        console.log(props);
         toast.success(response.data.message);
         props.reFetching();
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.message);
       });
     props.onClose();
+    }
   };
 
   return (

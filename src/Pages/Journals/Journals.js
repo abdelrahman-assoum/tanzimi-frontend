@@ -10,19 +10,10 @@ function Journals() {
   const [buttonType, setButtonType] = useState(null);
   const [showNewJournal, setShowNewJournal] = useState(false);
   const typingRef = useRef(false);
-  // const today = new Date();
   const addedDate = new Date();
   const {userInfo} = useContext(AuthContext)
-  const userId = userInfo &&  userInfo._id;
+  const userId = userInfo &&  userInfo?._id;
   const {data , isLoading, reFetch} = useFetch('/journal/user', userId)
-  // const options = {
-  //   weekday: "short",
-  //   day: "2-digit",
-  //   month: "short",n
-  //   year: "numeric",
-  console.log(data);
-  // };
-  // const formattedDate = today.toLocaleDateString("en-US", options);
 
   const handleRefetch = ()=> {
     reFetch();
@@ -30,14 +21,11 @@ function Journals() {
   const handleChangeButtonType = (type) => {
     setButtonType(type);
   };
-  // const handleEditClicked = (type) => {
-  //    setButtonType(type);
-  //  };
+
   const handleShowNewJournal = () => {
     setShowNewJournal(true);
     typingRef.current = true;
     setButtonType(null)
-    // console.log('hi')
   };
   const handleHideNewJournal = () => {
   setShowNewJournal(false);
@@ -63,7 +51,6 @@ function Journals() {
                 reFetching={handleRefetch}
                 new={true}
                 hideNew={handleHideNewJournal}
-                // actions={handleChangeButtonType()}
                 typing={typingRef.current}
               />
             ) : (
@@ -75,7 +62,7 @@ function Journals() {
                   key={i}
                   buttonType={buttonType}
                   changeType={handleChangeButtonType}
-                  journalDate={addedDate}
+                  journalDate={e.updatedAt || addedDate}
                   content={e.content}
                   actions={handleChangeButtonType}
                   cardId={e._id}

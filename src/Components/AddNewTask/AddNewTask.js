@@ -19,7 +19,6 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { useTheme } from "@mui/material";
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
-import axios from "axios";
 import useFetch from "../useFetch/useFetch";
 import { AuthContext } from "../../context/authProvider";
 // import { useTheme } from "@emotion/react";
@@ -70,7 +69,6 @@ function AddNewTask(props) {
         id: e._id,
       };
     }) || [];
-  // console.log(labelOptions);
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };
@@ -398,8 +396,6 @@ function getLabelColor(index, options) {
   const selectedOptions = options.filter((option) =>
     index.includes(option.name)
   );
-  // console.log(selectedOptions);
-  // console.log(selectedOptions.map((option) => option.color));
   return selectedOptions.map((option) => ` #${option.color}`);
 }
 function hexToRGBA(hex, alpha) {

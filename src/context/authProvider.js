@@ -15,20 +15,21 @@ const navigate = useNavigate();
 
      console.log('COOOKIE',cookies.userToken);
     if(cookies.userToken){
-      setToken(token);
+      setToken(cookies.userToken);
+      // console.log('anaHon')
     }
-    if(!cookies.userToken && !token){
-      navigate('/login')
-      console.log("logged out")
+    if (cookies.userInfo) {
+      setUserInfo(cookies.userInfo);
     }
-  }, [navigate,token]);
+    
+  }, [token, userInfo]);
 useEffect(()=>{
   console.log("HERE",token)
 },[navigate])
 
-    const handleLogin = (token, userinfo) => {
+    const handleLogin = (token, userInfo) => {
       setToken(token);
-      setUserInfo(userinfo);
+      setUserInfo(userInfo);
     };
 
     const handleLogout = () => {
@@ -41,11 +42,12 @@ useEffect(()=>{
     <AuthContext.Provider
       value={{
         token,
-        setToken,
         userInfo,
         loading,
         handleLogin,
         handleLogout,
+        setToken,
+        setUserInfo,
         setLoading,
       }}
     >
