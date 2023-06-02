@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AddNewTask from "../../Components/AddNewTask/AddNewTask";
 import useFetch from "../../Components/useFetch/useFetch";
 import TaskCard from "../../Components/TaskCard/TaskCard";
-import Cookies from "js-cookie";
 import styles from "./tasks.module.css";
 import { toast } from "react-hot-toast";
 import TaskHeading from "../../Components/TaskHeading/TaskHeading";
@@ -11,14 +10,16 @@ import AddLabel from "../../Components/AddLabel/AddLabel";
 import TaskNavPanel from "../../Components/NavPanel/TaskNavPanel";
 import Loading from "../../Components/Loading/Loading";
 import DeleteLabel from "../../Components/DeleteLabel/DeleteLabel";
+import { AuthContext } from "../../context/authProvider";
 
 function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [labelDialogOpen, setLabelDialogOpen] = useState(false);
   const [deleteLabelOpen, setDeleteLabelOpen] = useState(false);
-  
+
   const [buttonType, setButtonType] = useState("checkbox");
-  const userId = Cookies.get("passport");
+  const { userInfo, token, loading } = useContext(AuthContext);
+  const userId = userInfo && userInfo?._id;
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -40,11 +41,6 @@ function Tasks() {
     setDialogOpen(false);
   };
   const { data, isLoading, reFetch } = useFetch("/tasks/user", userId);
-  if(data !==null){
-
-  // console.log("FADI");
-  }
-
 
   const handleChangingStatus = () => {
     reFetch();
@@ -61,7 +57,7 @@ function Tasks() {
           return e.status === "In-Progress";
         })
       : [];
-  
+
   const DoneTask =
     data && data.userTasks
       ? data.userTasks.filter((e, i) => {
@@ -69,19 +65,19 @@ function Tasks() {
         })
       : [];
   const handleAddSubmit = (newTask) => {
-    const token = Cookies.get("userToken");
-    axios
-      .post(`${process.env.REACT_APP_URL}/tasks/new/`, newTask, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        toast.success("Task added successfully");
-        reFetch();
-      })
-      .catch((err) => {
-        toast.error(err.message);
-        console.log(err.message);
-      });
+    if (!loading) {
+      axios
+        .post(`${process.env.REACT_APP_URL}/tasks/new/`, newTask, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          toast.success("Task added successfully");
+          reFetch();
+        })
+        .catch((err) => {
+          toast.error(err.message);
+        });
+    }
   };
 
   return (

@@ -8,10 +8,11 @@ import Heading from "../../Components/heading/Heading";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { UserContext } from "../../UserContext";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
+import {useCookies} from "react-cookie";
 
 function Register() {
+  const [cookies, setCookie] = useCookies(["userInfo", "userToken"]);
   const [newUser, setNewUser] = useState({
     firstName: "",
     lastName: "",
@@ -20,9 +21,11 @@ function Register() {
     password: "",
   });
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
+  // const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate()
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 1);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -75,11 +78,16 @@ function Register() {
         .post(`${process.env.REACT_APP_URL}/users/register`, newUser)
         .then((response) => {
           console.log(response);
-          setUserInfo(response.data.user);
-          setToken(response.data.token);
           const authToken = response.data.token;
-          Cookies.set("userToken", authToken, { expires: 1 });
-          return navigate("/");
+          const user = response.data.user;
+          // Cookies.set("userToken", authToken, { expires: 1 });
+          // Cookies.set("userInfo", user, { expires: 1 });
+          setCookie("userToken", authToken, {
+            path: "/",
+            expires: expirationDate,
+          }); //
+          setCookie("userInfo", user, { path: "/", expires: expirationDate }); //
+          navigate("/app");
         })
         .then(() => {
           toast.success("Registration successful!");
