@@ -1,5 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext,useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -7,14 +8,23 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [cookies] = useCookies(["userToken", "userInfo"]);
+  const [cookies,setCookie] = useCookies(["userToken", "userInfo"]);
 
-  // useEffect(() => {
-  //   setToken(cookies.userToken);
-  //   setUserInfo(cookies.userInfo);
-  //   setLoading(false); // Set loading to false after state updates
-  // }, [cookies]);
+const navigate = useNavigate();
+  useEffect(() => {
 
+     console.log('COOOKIE',cookies.userToken);
+    if(cookies.userToken){
+      setToken(token);
+    }
+    if(!cookies.userToken && !token){
+      navigate('/login')
+      console.log("logged out")
+    }
+  }, [navigate,token]);
+useEffect(()=>{
+  console.log("HERE",token)
+},[navigate])
 
     const handleLogin = (token, userinfo) => {
       setToken(token);
@@ -31,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         token,
+        setToken,
         userInfo,
         loading,
         handleLogin,
@@ -41,4 +52,13 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+
+  
 };
+
+
+
+export const TokenState = () => {
+  return useContext(AuthContext);
+};
+

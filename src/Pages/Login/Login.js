@@ -10,6 +10,8 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/authProvider";
+import { TokenState } from "../../context/authProvider";
+
 
 function Login() {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ function Login() {
 
   const {handleLogin} = useContext(AuthContext)
 
-  // const { token, userId, setToken, setUserId } = useContext(UserContext);
+  const { token, setToken } = TokenState();
   // console.log('token', token);
   // console.log("userId", userId);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -54,6 +56,7 @@ function Login() {
         const authToken = response.data.token;
         const user = response.data.user;
         handleLogin(authToken, user)
+       setToken(authToken);
         setErrorMessage("");
         setCookie("userToken", authToken, {
           path: "/",

@@ -8,14 +8,14 @@ const PrivateRoutes = () => {
   const { token, userInfo } = useContext(AuthContext);
   // const { loading } = useContext(AuthContext); // Add loading from context
   console.log(token, userInfo)
-  useEffect(() => {
-    // if (!loading) {
-      if (!token || !userInfo) {
-        toast.error('You must be logged in')
-        navigate("/login");
-      }
-    // }
-  }, [token, userInfo, navigate]);
+  // useEffect(() => {
+  //   // if (!loading) {
+  //     if (!token || !userInfo) {
+  //       toast.error('You must be logged in')
+  //       navigate("/login");
+  //     }
+  //   // }
+  // }, [token, userInfo, navigate]);
 
   return <Outlet />;
 };
