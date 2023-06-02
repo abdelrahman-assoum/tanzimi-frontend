@@ -1,27 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import NavPanel from "../../Components/NavPanel/NavPanel";
 import JournalCard from "../../Components/JournalCard/JournalCard";
 import styles from "./journalpage.module.css";
 import useFetch from "../../Components/useFetch/useFetch";
-import Cookies from "js-cookie";
 import Loading from "../../Components/Loading/Loading";
+import { AuthContext } from "../../context/authProvider";
 
 function Journals() {
   const [buttonType, setButtonType] = useState(null);
   const [showNewJournal, setShowNewJournal] = useState(false);
   const typingRef = useRef(false);
-  // const today = new Date();
   const addedDate = new Date();
-  const userId = Cookies.get('passport')
+  const {userInfo} = useContext(AuthContext)
+  const userId = userInfo &&  userInfo?._id;
   const {data , isLoading, reFetch} = useFetch('/journal/user', userId)
-  // const options = {
-  //   weekday: "short",
-  //   day: "2-digit",
-  //   month: "short",n
-  //   year: "numeric",
-  console.log(data);
-  // };
-  // const formattedDate = today.toLocaleDateString("en-US", options);
 
   const handleRefetch = ()=> {
     reFetch();
@@ -29,14 +21,11 @@ function Journals() {
   const handleChangeButtonType = (type) => {
     setButtonType(type);
   };
-  const handleEditClicked = (type) => {
-     setButtonType(type);
-   };
+
   const handleShowNewJournal = () => {
     setShowNewJournal(true);
     typingRef.current = true;
     setButtonType(null)
-    // console.log('hi')
   };
   const handleHideNewJournal = () => {
   setShowNewJournal(false);
@@ -62,7 +51,6 @@ function Journals() {
                 reFetching={handleRefetch}
                 new={true}
                 hideNew={handleHideNewJournal}
-                // actions={handleChangeButtonType()}
                 typing={typingRef.current}
               />
             ) : (
@@ -74,7 +62,7 @@ function Journals() {
                   key={i}
                   buttonType={buttonType}
                   changeType={handleChangeButtonType}
-                  journalDate={addedDate}
+                  journalDate={e.updatedAt || addedDate}
                   content={e.content}
                   actions={handleChangeButtonType}
                   cardId={e._id}

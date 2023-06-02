@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./newtask.module.css";
 import {
   Box,
@@ -19,9 +19,8 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import { useTheme } from "@mui/material";
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
-import axios from "axios";
-import Cookies from "js-cookie";
 import useFetch from "../useFetch/useFetch";
+import { AuthContext } from "../../context/authProvider";
 // import { useTheme } from "@emotion/react";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -57,7 +56,8 @@ function AddNewTask(props) {
 
   const [label, setLabel] = useState([]);
   const [labelId, setLabelId] = useState([]);
-  const userId = Cookies.get("passport");
+  const {userInfo, loading} = useContext(AuthContext)
+  const userId = userInfo && userInfo._id;
 
   const { data, isLoading, reFetch } = useFetch("/label/user", userId);
 
@@ -69,7 +69,6 @@ function AddNewTask(props) {
         id: e._id,
       };
     }) || [];
-  // console.log(labelOptions);
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };
@@ -397,8 +396,6 @@ function getLabelColor(index, options) {
   const selectedOptions = options.filter((option) =>
     index.includes(option.name)
   );
-  // console.log(selectedOptions);
-  // console.log(selectedOptions.map((option) => option.color));
   return selectedOptions.map((option) => ` #${option.color}`);
 }
 function hexToRGBA(hex, alpha) {

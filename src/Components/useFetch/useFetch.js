@@ -1,36 +1,37 @@
 import axios from "axios";
-import Cookies from "js-cookie";
-import { useState, useEffect, useCallback } from "react";
-import { toast } from "react-hot-toast";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext, TokenState } from "../../context/authProvider";
 
 const useFetch = (url, credential) => {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const token = Cookies.get("userToken");
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_URL}${url}/${credential}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setData(res.data);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err);
-      }
-    };
-    fetchData();
-  }, []);
+    if (token) {
+      const fetchData = async () => {
+        setIsLoading(true);
+        try {
+          const res = await axios.get(
+            `${process.env.REACT_APP_URL}${url}/${credential}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          setData(res.data);
+          setIsLoading(false);
+        } catch (err) {
+          setError(err);
+        }
+      };
+      fetchData();
+    }
+  }, [token, url, credential]);
 
   const reFetch = async () => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const res = await axios.get(
         `${process.env.REACT_APP_URL}${url}/${credential}`,
         {
@@ -40,9 +41,11 @@ const useFetch = (url, credential) => {
       setData(res.data);
     } catch (err) {
       setError(err);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
+
   return { data, isLoading, error, reFetch };
 };
 
