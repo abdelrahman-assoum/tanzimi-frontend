@@ -1,22 +1,23 @@
-import React, { useContext, useEffect } from "react";
-import Cookies from "js-cookie";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authProvider";
+import { useCookies } from "react-cookie";
 
 function Logout() {
   const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const { handleLogout } = useContext(AuthContext);
 
   useEffect(() => {
-    const removeCookie = () => {
-      Cookies.remove("userToken");
-      Cookies.remove("userInfo");
+    const handleLogoutAndRemoveCookie = () => {
+      removeCookie("userToken");
+      removeCookie("userInfo");
       navigate("/login");
     };
 
     handleLogout();
-    removeCookie();
-  }, [handleLogout, navigate]);
+    handleLogoutAndRemoveCookie();
+  }, [handleLogout, navigate, removeCookie]);
 
   return null;
 }

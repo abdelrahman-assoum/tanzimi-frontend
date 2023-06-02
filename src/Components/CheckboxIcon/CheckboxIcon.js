@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "./check.module.css";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { AuthContext } from "../../context/authProvider";
 function CheckboxIcon({ variant, taskId, changingStatus }) {
+  const {token, userInfo} = useContext(AuthContext)
   const [currentVariant, setCurrentVariant] = useState(variant);
   let svgCode = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_214_169" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
@@ -43,7 +44,6 @@ function CheckboxIcon({ variant, taskId, changingStatus }) {
 </svg>
 `;
   }
-  const token = Cookies.get("userToken");
   const handleCheckboxClick = () => {
     let updatedVariant;
     if (currentVariant === "To-do") {
@@ -56,6 +56,7 @@ function CheckboxIcon({ variant, taskId, changingStatus }) {
 
     setCurrentVariant(updatedVariant);
     if (currentVariant === "In-Progress" || currentVariant === "To-do") {
+      if (token) {
       axios
         .put(
           `${process.env.REACT_APP_URL}/tasks/edit/${taskId}`,
@@ -77,6 +78,7 @@ function CheckboxIcon({ variant, taskId, changingStatus }) {
           console.error(error);
           toast.error("An error occurred.");
         });
+      }
     }
   };
 
