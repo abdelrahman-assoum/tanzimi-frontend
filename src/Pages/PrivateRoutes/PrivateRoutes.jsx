@@ -1,18 +1,24 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { UserContext } from "../../UserContext";
+import { AuthContext } from "../../context/authProvider";
+import { toast } from "react-hot-toast";
 
 const PrivateRoutes = () => {
   const navigate = useNavigate();
-  const { token, userId } = useContext(UserContext);
- console.log( token, userId );
+  const { token, userInfo } = useContext(AuthContext);
+  // const { loading } = useContext(AuthContext); // Add loading from context
+  console.log(token, userInfo)
   useEffect(() => {
-    if (!token || !userId) {
-      navigate('/login');
-    }
-  }, [token, userId, navigate]);
+    // if (!loading) {
+      if (!token || !userInfo) {
+        toast.error('You must be logged in')
+        navigate("/login");
+      }
+    // }
+  }, [token, userInfo, navigate]);
 
   return <Outlet />;
 };
 
 export default PrivateRoutes;
+

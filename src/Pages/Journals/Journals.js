@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import NavPanel from "../../Components/NavPanel/NavPanel";
 import JournalCard from "../../Components/JournalCard/JournalCard";
 import styles from "./journalpage.module.css";
 import useFetch from "../../Components/useFetch/useFetch";
-import Cookies from "js-cookie";
 import Loading from "../../Components/Loading/Loading";
+import { AuthContext } from "../../context/authProvider";
 
 function Journals() {
   const [buttonType, setButtonType] = useState(null);
@@ -12,7 +12,8 @@ function Journals() {
   const typingRef = useRef(false);
   // const today = new Date();
   const addedDate = new Date();
-  const userId = Cookies.get('passport')
+  const {userInfo} = useContext(AuthContext)
+  const userId = userInfo &&  userInfo._id;
   const {data , isLoading, reFetch} = useFetch('/journal/user', userId)
   // const options = {
   //   weekday: "short",
@@ -29,9 +30,9 @@ function Journals() {
   const handleChangeButtonType = (type) => {
     setButtonType(type);
   };
-  const handleEditClicked = (type) => {
-     setButtonType(type);
-   };
+  // const handleEditClicked = (type) => {
+  //    setButtonType(type);
+  //  };
   const handleShowNewJournal = () => {
     setShowNewJournal(true);
     typingRef.current = true;

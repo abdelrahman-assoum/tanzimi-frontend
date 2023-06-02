@@ -1,10 +1,11 @@
 import './App.css';
+import AppRoutes from './Pages/AppRoutes';
 
 function App() {
   return (
     <>
     <div>
-      app
+      <AppRoutes />
     </div>
     </>
   );

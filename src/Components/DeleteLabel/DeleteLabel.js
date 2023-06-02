@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Chip,
@@ -15,9 +15,9 @@ import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
-import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
 import useFetch from "../useFetch/useFetch";
+import { AuthContext } from "../../context/authProvider";
 
 function DeleteLabel(props) {
   const ITEM_HEIGHT = 48;
@@ -30,7 +30,8 @@ function DeleteLabel(props) {
       },
     },
   };
-  const userId = Cookies.get("passport");
+  const {userInfo, token} = useContext(AuthContext)
+  const userId = userInfo && userInfo._id;
   const { data, reFetch } = useFetch("/label/user", userId);
   const labelOptions =
     data?.userLabel?.map((e, i) => {
@@ -60,7 +61,6 @@ function DeleteLabel(props) {
 
   const handleDelete = (event) => {
     event.preventDefault();
-    const token = Cookies.get("userToken");
     axios
       .delete(`${process.env.REACT_APP_URL}/label/delete/${labelId}`, {
         headers: { Authorization: `Bearer ${token}` },

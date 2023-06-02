@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -9,14 +9,14 @@ import {
 import SmallButton from "../SmallButton/SmallButton";
 import SmallOutlined from "../SmallButton/SmallOutlined";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { toast } from "react-hot-toast";
-import useFetch from "../useFetch/useFetch";
+import { AuthContext } from "../../context/authProvider";
 
 function DeleteDialog(props) {
+
+  const {token} = useContext(AuthContext)
   const handleDelete = (event) => {
     event.preventDefault();
-    const token = Cookies.get("userToken");
     axios
       .delete(`${process.env.REACT_APP_URL}${props.url}${props.deleteId}`, {
         headers: { Authorization: `Bearer ${token}` },

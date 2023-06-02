@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Chip,
@@ -22,6 +22,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import useFetch from "../useFetch/useFetch";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../context/authProvider";
 // import { useTheme } from "@emotion/react";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -65,7 +66,8 @@ function EditTask(props) {
 
   const [label, setLabel] = useState(initialSelectedLabels);
   const [labelId, setLabelId] = useState(initialLabelIds);
-  const userId = Cookies.get("passport");
+  const {token , loading, userInfo} = useContext(AuthContext)
+  const userId = userInfo && userInfo._id;
 
   const { data, isLoading, reFetch } = useFetch("/label/user", userId);
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../../Components/Input/InputField";
 import LoginLogo from "../../Assets/Images/loginLogo.svg";
 import Logo from "../../Assets/Images/Logo.svg";
@@ -6,19 +6,24 @@ import styles from "./login.module.css";
 import Button from "../../Components/Button/Button";
 import Heading from "../../Components/heading/Heading";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../UserContext";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useCookies } from "react-cookie";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../context/authProvider";
 
 function Login() {
   const navigate = useNavigate();
-  const { token, userId, setToken, setUserId } = useContext(UserContext);
+  const [cookies, setCookie] = useCookies(["userInfo", "userToken"]);
+
+  const {handleLogin} = useContext(AuthContext)
+
+  // const { token, userId, setToken, setUserId } = useContext(UserContext);
   // console.log('token', token);
   // console.log("userId", userId);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [errorMessage, setErrorMessage] = useState("");
-
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 1);
   // Function to validate email format
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,7 +35,7 @@ function Login() {
     return password.length >= 8;
   }
 
-  const handleLogin = (event) => {
+  const handleLoginFunction = (event) => {
     event.preventDefault();
     if (!isValidEmail(loginData.email)) {
       setErrorMessage("Please enter a valid email");
@@ -47,25 +52,27 @@ function Login() {
       .post(`${process.env.REACT_APP_URL}/users/login`, loginData)
       .then((response) => {
         const authToken = response.data.token;
-        setToken(authToken);
-        setUserId(response.data._id);
-        // setUserId(response.data);
+        const user = response.data.user;
+        handleLogin(authToken, user)
         setErrorMessage("");
-        Cookies.set("userToken", authToken, { expires: 1 }); //1day
-        Cookies.set("passport", response.data._id, { expires: 1 }); //1 day
-        navigate('/app')
+        setCookie("userToken", authToken, {
+          path: "/",
+          expires: expirationDate,
+        }); //
+        setCookie("userInfo", user, { path: "/", expires: expirationDate }); //
+        
+        navigate("/app");
       })
-      .then(()=> {
+      .then(() => {
         toast.success("Login successful!");
       })
       .catch((error) => {
         console.log(error);
-        if(error.response){
+        if (error.response) {
           toast.error(error.response.data.error);
-        }else{
-        toast.error(error.message || "An error occurred, please try again");
+        } else {
+          toast.error(error.message || "An error occurred, please try again");
         }
-      
       });
   };
   return (
@@ -77,7 +84,7 @@ function Login() {
         <div className={styles.rightSide}>
           <div className={styles.rightSideLogin}>
             <img src={Logo} alt="logo" className={styles.logo} />
-            <form className={styles.loginForm} onSubmit={handleLogin}>
+            <form className={styles.loginForm} onSubmit={handleLoginFunction}>
               <div className={styles.loginInputs}>
                 <Heading
                   title="Log In"
