@@ -1,0 +1,16 @@
+.pomodoroCard {
+    width: 320px;
+    background-color: var(--white);
+    padding: 20px;
+    padding-top: 40px;
+    border-top: solid 20px var(--blue2);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.cardHeading {
+    font-size: 20px;
+    text-align: center;
+}

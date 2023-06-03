@@ -18,7 +18,7 @@ function Tasks() {
   const [deleteLabelOpen, setDeleteLabelOpen] = useState(false);
 
   const [buttonType, setButtonType] = useState("checkbox");
-  const { userInfo, token, loading } = useContext(AuthContext);
+  const { userInfo, token } = useContext(AuthContext);
   const userId = userInfo && userInfo?._id;
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -65,7 +65,7 @@ function Tasks() {
         })
       : [];
   const handleAddSubmit = (newTask) => {
-    if (!loading) {
+    if (token) {
       axios
         .post(`${process.env.REACT_APP_URL}/tasks/new/`, newTask, {
           headers: { Authorization: `Bearer ${token}` },

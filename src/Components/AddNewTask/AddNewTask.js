@@ -69,6 +69,8 @@ function AddNewTask(props) {
         id: e._id,
       };
     }) || [];
+
+    
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };

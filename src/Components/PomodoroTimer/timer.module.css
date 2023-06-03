@@ -1,0 +1,20 @@
+.pomodoroTimer {
+    padding-top: 20px;
+    max-width: 200px;
+    margin: 0 auto;
+    text-align: center;
+}
+.pomodoroTimer button {
+    background-color: transparent;
+    color: var(--blue2);
+    border: 0;
+    display: inline-block;
+    width: 100px;
+    height: auto;
+}
+
+.pomodoroTimer button svg {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+}
