@@ -1,11 +1,16 @@
 import React from "react";
 import "./home.css";
-import TaskCard from "../../Components/TaskCard/TaskCard";
-
+import Navbar from "../../Components/Navbar/Navbar";
+import Landing from "../../Components/Landing/Landing";
 function Home() {
-  return <div>
-    testing
-  </div>;
+  return (
+    <>
+      <div className="home">
+        <Navbar />
+        <Landing />
+      </div>
+    </>
+  );
 }
 
 export default Home;

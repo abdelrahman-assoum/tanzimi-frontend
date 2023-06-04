@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext, TokenState } from "../../context/authProvider";
 
 const useFetch = (url, credential) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const firstLoading = useRef(false)
   const { token } = useContext(AuthContext);
 
   useEffect(() => {

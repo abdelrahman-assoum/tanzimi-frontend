@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import React from "react";
 import Login from "./Login/Login";
-// import Home from "./Home/Home"
 import Register from "./Register/Register";
-// import Cookies from "js-cookie";
 import Dashboard from "./Dashboard/Dashboard";
 import Tasks from "./Tasks/Tasks";
 import Schedule from "./Schedule/Schedule";
@@ -14,10 +12,13 @@ import AppLayout from "../Components/AppLayout/AppLayout";
 import Logout from "./Logout/Logout";
 import { Toaster } from "react-hot-toast";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes.jsx";
+import NotFound from "./NotFound/NotFound";
+import Home from "./Home/Home";
 function AppRoutes() {
   return (
     <div className="appRoutes">
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoutes />}>
@@ -31,6 +32,7 @@ function AppRoutes() {
             <Route path="journals" element={<Journals />} />
           </Route>
         </Route>
+        <Route path="/*" element={<NotFound/>} />
       </Routes>
       <Toaster />
     </div>

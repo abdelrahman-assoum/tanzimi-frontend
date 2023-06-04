@@ -8,7 +8,6 @@ import styles from "./timer.module.css";
 const green = "#4aec8c";
 
 function Timer() {
-
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState("work"); // work/break/null
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -67,10 +66,11 @@ function Timer() {
           text={minutes + ":" + seconds}
           styles={buildStyles({
             strokeLinecap: "butt",
-            textColor: blueColor,
-            pathColor: blueColor,
+            textColor: mode === "work" ? blueColor : green,
+            pathColor: mode === "work" ? blueColor : green,
           })}
         />
+
         <div style={{ marginTop: "20px" }}>
           {isPaused ? (
             <PlayButton

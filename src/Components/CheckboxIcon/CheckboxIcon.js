@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styles from "./check.module.css";
-import { Toaster, toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import axios from "axios";
 import { AuthContext } from "../../context/authProvider";
 function CheckboxIcon({ variant, taskId, changingStatus }) {
@@ -91,6 +91,7 @@ function CheckboxIcon({ variant, taskId, changingStatus }) {
         dangerouslySetInnerHTML={{ __html: svgCode }}
         style={{
           cursor: currentVariant !== "Done" ? "pointer" : "default",
+          display: 'flex'
         }}
       ></div>
     </>

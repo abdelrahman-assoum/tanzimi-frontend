@@ -1,0 +1,8 @@
+.goalsCards {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.goalsCards > div {
+    margin-right: 20px;
+}
