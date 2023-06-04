@@ -20,6 +20,7 @@ function Tasks() {
   const [buttonType, setButtonType] = useState("checkbox");
   const { userInfo, token } = useContext(AuthContext);
   const userId = userInfo && userInfo?._id;
+  
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -40,7 +41,7 @@ function Tasks() {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-  const { data, isLoading, reFetch } = useFetch("/tasks/user", userId);
+  const { data, isLoading, reFetch } = useFetch("/tasks/user", userId && userId);
 
   const handleChangingStatus = () => {
     reFetch();
