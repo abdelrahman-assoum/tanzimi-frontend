@@ -1,0 +1,41 @@
+.errorImg svg {
+    height: 160px;
+}
+.notFound .head h4 {
+    font-size: 96px;
+}
+.notFound .head span {
+    font-size: 48px;
+}
+
+.navigateButton {
+    padding: 20px;
+    font-size: 16px;
+    width: fit-content;
+    height: fit-content;
+    margin: 40px 0;
+    background-color: var(--black);
+    color: var(--white);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.notFound {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}
+a:visited {
+    text-decoration: none;
+    color: var(--white);
+}

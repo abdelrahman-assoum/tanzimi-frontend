@@ -1,0 +1,44 @@
+.navbar {
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+.logo {
+    display: flex;
+    align-items: center;
+
+}
+.logo > img {
+    width: 48px;
+}
+.logoText img{
+    width: 120px;
+    margin-left: 10px;
+}
+.loginButton {
+    color: var(--blue2) !important;
+    background-color: var(--white);
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.links a {
+    margin-right: 10px;
+    font-size: 18px;    
+    padding: 10px;
+    margin: 0 10px;
+    color: white;
+}
+
+@media(max-width:880px) {
+    .logoText{
+        display: none;
+    }
+}

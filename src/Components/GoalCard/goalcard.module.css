@@ -1,0 +1,137 @@
+@media (min-width: 768px) {
+.goalCard {
+    width: 100%;
+    height: fit-content;
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between;
+}
+
+.goalCard .goalInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.goalCard .progress {
+    max-width: 240px;
+    align-self: center;
+}
+
+.goalCard .heading {
+    margin: 20px 0;
+    flex-grow: 1;
+}
+
+.goalCard .heading h6 {
+    font-size: 20px;
+    color: var(--black);
+}
+
+.goalCard .heading span {
+    color: var(--gray);
+}
+
+.goalCard .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.goalCard .task span {
+    font-weight: 600;
+    color: var(--black);
+}
+
+.goalCard .details {
+    margin-top: 40px;
+    display: none;
+}
+
+.goalCard .tasks .tasksHead {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: bold;
+}
+.goalCard .desktopTasks {
+    margin-top: 40px;
+    margin-right: 20px;
+}
+
+.goalCard .desktopTasks .tasksHead {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: bold;
+}
+}
+@media (max-width:767px) {
+.goalCard {
+        width: 300px;
+        height: fit-content;
+        padding: 20px;
+        background-color: var(--white);
+        border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.goalCard .progress {
+    max-width: 240px;
+}
+.goalCard .heading {
+    margin: 20px 0;
+}
+.goalCard .heading h6 {
+    font-size: 20px;
+    color: var(--black);
+}
+.goalCard .heading span {
+    color: var(--gray);
+}
+.goalCard .desktopTasks {
+    display: none;
+}
+.goalCard .task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+.goalCard .task span {
+    font-weight: 600;
+    color: var(--black);
+}
+.goalCard .tasks {
+    margin-top: 40px;
+}
+.goalCard .tasks .tasksHead {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: bold;
+}
+}

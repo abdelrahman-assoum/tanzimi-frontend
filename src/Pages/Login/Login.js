@@ -53,8 +53,10 @@ function Login() {
     axios
       .post(`${process.env.REACT_APP_URL}/users/login`, loginData)
       .then((response) => {
+        console.log(response)
         const authToken = response.data.token;
         const user = response.data.user;
+        console.log(user)
         handleLogin(authToken, user)
        setToken(authToken);
         setErrorMessage("");

@@ -9,7 +9,7 @@ function Schedule() {
   return (
     <div>
       <div>
-        <h1>Demo App</h1>
+        {/* <h1>Demo App</h1> */}
         <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
       </div>
     </div>
