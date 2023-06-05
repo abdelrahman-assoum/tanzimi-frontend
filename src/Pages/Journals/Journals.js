@@ -5,6 +5,7 @@ import styles from "./journalpage.module.css";
 import useFetch from "../../Components/useFetch/useFetch";
 import Loading from "../../Components/Loading/Loading";
 import { AuthContext } from "../../context/authProvider";
+import DataNotFound from "../../Components/NotFound/DataNotFound";
 
 function Journals() {
   const [buttonType, setButtonType] = useState(null);
@@ -56,21 +57,27 @@ function Journals() {
             ) : (
               ""
             )}
-            {data &&
-              data.userJournals.map((e, i) => (
-                <JournalCard
-                  key={i}
-                  buttonType={buttonType}
-                  changeType={handleChangeButtonType}
-                  journalDate={e.updatedAt || addedDate}
-                  content={e.content}
-                  actions={handleChangeButtonType}
-                  cardId={e._id}
-                  reFetching={handleRefetch}
-                  cardColor={e.color || getRandomColor()}
-                  // typing={typing}
-                />
-              ))}
+              {data && data.userJournals && data.userJournals.length === 0 ? (
+                <DataNotFound type="Notes" />
+              ) : (
+              <>
+                {data &&
+                  data.userJournals.map((e, i) => (
+                    <JournalCard
+                      key={i}
+                      buttonType={buttonType}
+                      changeType={handleChangeButtonType}
+                      journalDate={e.updatedAt || addedDate}
+                      content={e.content}
+                      actions={handleChangeButtonType}
+                      cardId={e._id}
+                      reFetching={handleRefetch}
+                      cardColor={e.color || getRandomColor()}
+                      // typing={typing}
+                    />
+                  ))}
+              </>
+            )}
           </div>
         </div>
       )}

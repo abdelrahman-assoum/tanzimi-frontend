@@ -1,0 +1,35 @@
+.dataNotFound {
+        height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+}
+.shape img {
+    width: 280px;
+    height: 280px;
+}
+.icon img {
+    height: 260px;
+}
+.illustration {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.illustration .shape {
+        position: absolute;
+            z-index: -1;
+}
+.content {
+    text-align: center;
+}
+.content h4 {
+    font-size: 28px;
+    color: var(--black);
+}
+.content span{
+
+}

@@ -49,14 +49,14 @@ function AddNewTask(props) {
   const [taskName, setTaskName] = useState("");
   const [status, setStatus] = useState("To-do");
   const [priority, setPriority] = useState("Low");
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(5);
   const [dueDate, setDueDate] = useState(
     new Date().toISOString().split("T")[0]
   );
 
   const [label, setLabel] = useState([]);
   const [labelId, setLabelId] = useState([]);
-  const {userInfo, loading} = useContext(AuthContext)
+  const { userInfo, loading } = useContext(AuthContext);
   const userId = userInfo && userInfo._id;
 
   const { data, isLoading, reFetch } = useFetch("/label/user", userId);
@@ -70,7 +70,6 @@ function AddNewTask(props) {
       };
     }) || [];
 
-    
   const handleNameChange = (event) => {
     setTaskName(event.target.value);
   };

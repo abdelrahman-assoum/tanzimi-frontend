@@ -21,9 +21,7 @@ export const AuthProvider = ({ children }) => {
       setUserInfo(cookies.userInfo);
     }
   }, [token, userInfo]);
-  useEffect(() => {
-    console.log("HERE", token);
-  }, [navigate]);
+
 
   const handleLogin = (token, userInfo) => {
     setToken(token);

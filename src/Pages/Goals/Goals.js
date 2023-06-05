@@ -8,10 +8,13 @@ import { toast } from "react-hot-toast";
 import GoalCard from "../../Components/GoalCard/GoalCard";
 import Loading from "../../Components/Loading/Loading";
 import styles from './goals.module.css'
+import DataNotFound from "../../Components/NotFound/DataNotFound";
 
 
 function Goals() {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [buttonType, setButtonType] = useState(null);
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -23,6 +26,11 @@ function Goals() {
 
   const {data, isLoading, reFetch} = useFetch('/goal/user', userId)
   console.log(data)
+
+  const handleChangeButtonType = (type) => {
+    setButtonType(type);
+  };
+
   const handleAddNewGoal = (newGoal) => {
      if (token) {
       axios
@@ -42,35 +50,47 @@ function Goals() {
   }
   return (
     <>
-      {/* {isLoading ? (
+      {isLoading ? (
         <Loading />
-      ) : ( */}
+      ) : (
+      <div>
         <div>
-          <div>
-            <NavPanel title="Goals" addClick={handleDialogOpen} />
-            <AddNewGoal
-              open={dialogOpen}
-              onClose={handleDialogClose}
-              onSubmit={handleAddNewGoal}
-            />
-          </div>
-          <div className={styles.goalsCards}>
-            {data &&
-              data.userGoals.map((e, i) => {
-                return (
-                  <GoalCard
-                    tasks={e.tasks}
-                    name={e.name}
-                    dueDate={e.dueDate}
-                    goalId={e._id}
-                    key={i}
-                    refetching={reFetch}
-                  />
-                );
-              })}
-          </div>
+          <NavPanel
+            title="Goals"
+            addClick={handleDialogOpen}
+            buttonType={buttonType}
+            actions={handleChangeButtonType}
+          />
+          <AddNewGoal
+            open={dialogOpen}
+            onClose={handleDialogClose}
+            onSubmit={handleAddNewGoal}
+          />
         </div>
-      {/* )} */}
+        <div>
+          {data && data.userGoals && data.userGoals.length === 0 ? (
+            <DataNotFound type="Goals" />
+          ) : (
+            <div className={styles.goalsCards}>
+              {data &&
+                data.userGoals.map((e, i) => {
+                  return (
+                    <GoalCard
+                      tasks={e.tasks}
+                      name={e.name}
+                      dueDate={e.dueDate}
+                      goalId={e._id}
+                      key={i}
+                      refetching={reFetch}
+                      buttonType={buttonType}
+                    />
+                  );
+                })}
+            </div>
+          )}
+        </div>
+      </div>
+       )} 
     </>
   );
 }

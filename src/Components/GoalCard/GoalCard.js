@@ -1,24 +1,36 @@
-import React from 'react'
-import styles from './goalcard.module.css'
-import CheckboxIcon from '../CheckboxIcon/CheckboxIcon'
+import React from "react";
+import styles from "./goalcard.module.css";
+import CheckboxIcon from "../CheckboxIcon/CheckboxIcon";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Divider } from '@mui/material';
+import DateRangeIcon from "@mui/icons-material/DateRange";
+
+import { Divider } from "@mui/material";
+
+
 function GoalCard(props) {
-    let tasks = props.tasks;
-    let doneTasks = tasks && tasks.filter((e)=> {
-        return e.status === 'Done';
-    })
- const percentage = Math.round(
-   ((doneTasks && doneTasks.length) / (tasks && tasks.length)) * 100
- );
-    console.log(tasks);
+  let tasks = props.tasks;
+  let doneTasks =
+    tasks &&
+    tasks.filter((e) => {
+      return e.status === "Done";
+    });
+  const percentage = Math.round(
+    ((doneTasks && doneTasks.length) / (tasks && tasks.length)) * 100
+  );
+
+  const dueDateFormatted = props && props.dueDate.split("T")[0];
+  console.log(tasks);
+  console.log(props);
   return (
     <>
       <div className={styles.goalCard}>
         <div className={styles.heading}>
           <h6>{props.name}</h6>
-          <span>Lorem Ipsum testing</span>
+          <div className={styles.dueDate}>
+            <DateRangeIcon />
+            <span>{dueDateFormatted}</span>
+          </div>
           <div className="desktopView">
             <div className={styles.desktopTasks}>
               <span className={styles.tasksHead}>Goal Tasks</span>
@@ -80,4 +92,4 @@ function GoalCard(props) {
   );
 }
 
-export default GoalCard
+export default GoalCard;

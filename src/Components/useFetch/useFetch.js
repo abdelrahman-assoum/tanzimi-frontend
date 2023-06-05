@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext, TokenState } from "../../context/authProvider";
+import { toast } from "react-hot-toast";
 
 const useFetch = (url, credential) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const firstLoading = useRef(false)
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
@@ -42,6 +42,7 @@ const useFetch = (url, credential) => {
       setData(res.data);
     } catch (err) {
       setError(err);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }

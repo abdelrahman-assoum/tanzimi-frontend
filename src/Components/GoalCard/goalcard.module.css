@@ -29,15 +29,16 @@
     margin: 20px 0;
     flex-grow: 1;
 }
-
+.goalCard .dueDate {
+    display: flex;
+    color: var(--gray);
+    align-items: center;
+}
 .goalCard .heading h6 {
     font-size: 20px;
     color: var(--black);
 }
 
-.goalCard .heading span {
-    color: var(--gray);
-}
 
 .goalCard .task {
     display: flex;
