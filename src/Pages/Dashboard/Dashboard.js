@@ -4,18 +4,20 @@ import CompletedTasks from '../../Components/CompletedTasks/CompletedTasks';
 import { Toaster } from 'react-hot-toast';
 import PomodoroCard from '../../Components/PomodoroCard/PomodoroCard';
 import styles from './dashboard.module.css'
+import DataNotFound from '../../Components/NotFound/DataNotFound';
 
 function Dashboard() {
 
   return (
     <div>
       <Toaster />
-      <div className={styles.dashboardContainer}>
+      {/* <div className={styles.dashboardContainer}>
            <CompletedTasks />
            <div>
              <PomodoroCard />
            </div>
-      </div>
+      </div> */}
+      <DataNotFound type="Tasks"/>
     </div>
   );
 }

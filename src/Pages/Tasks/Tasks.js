@@ -11,6 +11,7 @@ import TaskNavPanel from "../../Components/NavPanel/TaskNavPanel";
 import Loading from "../../Components/Loading/Loading";
 import DeleteLabel from "../../Components/DeleteLabel/DeleteLabel";
 import { AuthContext } from "../../context/authProvider";
+import DataNotFound from "../../Components/NotFound/DataNotFound";
 
 function Tasks() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -111,6 +112,9 @@ function Tasks() {
               open={deleteLabelOpen}
               onClose={() => setDeleteLabelOpen(false)}
             />
+            <div>
+              {data && data.userTasks && data.userTasks.length === 0 ? <DataNotFound type='Tasks'/> : (
+                <>
             <div className={styles.Tasks}>
               <div className={styles.ToDoTasks}>
                 {todoTask && (
@@ -181,9 +185,12 @@ function Tasks() {
                     ))}
                 </div>
               </div>
+              </div>
+              </>
+              )}
             </div>
           </>
-        )}
+          )}
       </div>
     </>
   );
