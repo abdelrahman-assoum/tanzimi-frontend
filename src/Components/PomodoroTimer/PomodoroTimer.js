@@ -18,16 +18,16 @@ function PomodoroTimer(props) {
   const settingsInfo = useContext(settingsContext);
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState("work"); // work/break/null
-  const [sessionCount, setSessionCount] = useState(0);
   const [currentSessionDuration, setCurrentSessionDuration] = useState(0);
-  const [totalSessions, setTotalSessions] = useState(0);
+  // const [sessionCount, setSessionCount/] = useState(0);
+  // const [totalSessions, setTotalSessions] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(0);
   const { token } = useContext(AuthContext);
   const secondsLeftRef = useRef(secondsLeft);
   const isPausedRef = useRef(isPaused);
   const modeRef = useRef(mode);
+  const {sessionCount, setSessionCount, totalSessions, setTotalSessions} = useContext(settingsContext)
   const sessionCountRef = useRef(sessionCount);
-
   function tick() {
     secondsLeftRef.current--;
     setSecondsLeft(secondsLeftRef.current);
@@ -43,19 +43,19 @@ function PomodoroTimer(props) {
         isPausedRef.current = true;
 
         // Send PUT request using Axios
-        axios
-          .put(
-            `${process.env.REACT_APP_URL}/tasks/edit/${props.selectedTaskId}`,
-            { status: "Done" },
-            { headers: { Authorization: `Bearer ${token}` } }
-          )
-          .then((response) => {
-            console.log("PUT request successful", response);
-            toast.success(`Task completed successfully`)
-          })
-          .catch((error) => {
-            console.error("Error sending PUT request", error);
-          });
+        // axios
+        //   .put(
+        //     `${process.env.REACT_APP_URL}/tasks/edit/${props.selectedTaskId}`,
+        //     { status: "Done" },
+        //     { headers: { Authorization: `Bearer ${token}` } }
+        //   )
+        //   .then((response) => {
+        //     console.log("PUT request successful", response);
+        //     toast.success(`Task completed successfully`)
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error sending PUT request", error);
+        //   });
 
         return;
       }
@@ -173,10 +173,6 @@ function PomodoroTimer(props) {
             </p>
           </div>
         )}
-      </div>
-      <div style={{ marginTop: "20px" }}>
-        <p>Total Sessions: {totalSessions}</p>
-        <p>Sessions Remaining: {totalSessions - sessionCount}</p>
       </div>
     </div>
   );
