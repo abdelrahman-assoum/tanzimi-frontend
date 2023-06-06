@@ -85,8 +85,9 @@ function PomodoroPage() {
             className="pomodoroPage"
             style={{
               display: "flex",
-              flexDirection: "column",
               alignItems: "center",
+              justifyContent: 'space-around',
+              height: "100vh",
             }}
           >
             <div className="leftSide">
