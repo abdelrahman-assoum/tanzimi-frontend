@@ -5,6 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import PomodoroCard from '../../Components/PomodoroCard/PomodoroCard';
 import styles from './dashboard.module.css'
 import DataNotFound from '../../Components/NotFound/DataNotFound';
+import Features from '../../Components/Features/Features';
+import Contact from '../../Components/Contact/Contact';
 
 function Dashboard() {
 
@@ -17,7 +19,10 @@ function Dashboard() {
              <PomodoroCard />
            </div>
       </div> */}
-      <DataNotFound type="Tasks"/>
+      {/* <Features />
+       */}
+       <Contact />
+      {/* <DataNotFound type="Tasks"/> */}
     </div>
   );
 }

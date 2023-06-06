@@ -43,42 +43,43 @@ function Journals() {
             addClick={handleShowNewJournal}
             buttonType={buttonType}
           />
-          <div className={styles.journalContainer}>
-            {showNewJournal ? (
-              <JournalCard
-                journalDate={addedDate}
-                cardColor={getRandomColor()}
-                buttonType={buttonType}
-                reFetching={handleRefetch}
-                new={true}
-                hideNew={handleHideNewJournal}
-                typing={typingRef.current}
-              />
-            ) : (
-              ""
-            )}
-              {data && data.userJournals && data.userJournals.length === 0 ? (
-                <DataNotFound type="Notes" />
+          {!showNewJournal &&
+          data &&
+          data.userJournals &&
+          data.userJournals.length === 0 ? (
+            <DataNotFound type="Notes" />
+          ) : (
+            <div className={styles.journalContainer}>
+              {showNewJournal ? (
+                <JournalCard
+                  journalDate={addedDate}
+                  cardColor={getRandomColor()}
+                  buttonType={buttonType}
+                  reFetching={handleRefetch}
+                  new={true}
+                  hideNew={handleHideNewJournal}
+                  typing={typingRef.current}
+                />
               ) : (
-              <>
-                {data &&
-                  data.userJournals.map((e, i) => (
-                    <JournalCard
-                      key={i}
-                      buttonType={buttonType}
-                      changeType={handleChangeButtonType}
-                      journalDate={e.updatedAt || addedDate}
-                      content={e.content}
-                      actions={handleChangeButtonType}
-                      cardId={e._id}
-                      reFetching={handleRefetch}
-                      cardColor={e.color || getRandomColor()}
-                      // typing={typing}
-                    />
-                  ))}
-              </>
-            )}
-          </div>
+                ""
+              )}
+              {data &&
+                data.userJournals.map((e, i) => (
+                  <JournalCard
+                    key={i}
+                    buttonType={buttonType}
+                    changeType={handleChangeButtonType}
+                    journalDate={e.updatedAt || addedDate}
+                    content={e.content}
+                    actions={handleChangeButtonType}
+                    cardId={e._id}
+                    reFetching={handleRefetch}
+                    cardColor={e.color || getRandomColor()}
+                    // typing={typing}
+                  />
+                ))}
+            </div>
+          )}
         </div>
       )}
     </div>

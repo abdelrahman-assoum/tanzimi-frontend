@@ -48,3 +48,34 @@
 }
 .callToActionbtn a {
 }
+@media (max-width: 1080px) {
+    .landing {
+        position: inherit;
+        margin: 200px 0;
+    }
+    .landing .content {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .landing .text {
+        align-items: center;
+        text-align: center;
+    }
+    
+}
+@media (max-width: 768px) {
+    .landing .image img{
+        max-width: 300px;
+        width: 100%;
+    }
+    .landing {
+        margin: 100px 0;
+    }
+    .landing h2 {
+        font-size: 36px;
+    }
+    .landing p {
+        font-size: 18px;
+        width: 300px;
+    }
+}
