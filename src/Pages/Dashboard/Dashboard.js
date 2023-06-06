@@ -13,15 +13,15 @@ function Dashboard() {
   return (
     <div>
       <Toaster />
-      {/* <div className={styles.dashboardContainer}>
+      <div className={styles.dashboardContainer}>
            <CompletedTasks />
            <div>
              <PomodoroCard />
            </div>
-      </div> */}
+      </div>
       {/* <Features />
        */}
-       <Contact />
+       {/* <Contact /> */}
       {/* <DataNotFound type="Tasks"/> */}
     </div>
   );
