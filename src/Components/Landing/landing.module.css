@@ -46,7 +46,8 @@
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
-.callToActionbtn a {
+.callToActionbtn a:visited , .callToActionbtn a{
+    color: white;
 }
 @media (max-width: 1080px) {
     .landing {
