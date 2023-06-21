@@ -34,7 +34,7 @@
     position: relative;
 }
 .rightSideRegister .logo {
-    margin: 10px 60px;
+    margin: 20px 60px;
 }
 
 .registerForm {
@@ -80,12 +80,10 @@
 
     .rightSide {
         width: 100%;
-
+        margin: 25px 0;
     }
 
-    .rightSide .logo {
-        margin: 20px;
-    }
+
 
     .registerPage {
         justify-content: center;
@@ -100,6 +98,12 @@
     .leftSide{
         display: none;
     }
+    .rightSide {
+        margin: 25px auto;
+    } 
+     .rightSide .logo {
+       margin: 20px;
+     }
     .registerForm{
         margin: 0 10px;
     }
