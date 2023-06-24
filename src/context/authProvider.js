@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("COOOKIE", cookies.userToken);
+    // console.log("COOOKIE", cookies.userToken);
     if (cookies.userToken) {
       setToken(cookies.userToken);
       // console.log('anaHon')

@@ -10,6 +10,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 // import Cookies from "js-cookie";
 import {useCookies} from "react-cookie";
+import { AuthContext } from "../../context/authProvider";
 
 function Register() {
   const [cookies, setCookie] = useCookies(["userInfo", "userToken"]);
@@ -20,6 +21,7 @@ function Register() {
     phoneNumber: "",
     password: "",
   });
+  const { handleLoginSuccess } = useContext(AuthContext);
   const [confirmPassword, setConfirmPassword] = useState("");
   // const { setToken, setIsLoggedIn, setUserInfo } = useContext(UserContext);
   const [errors, setErrors] = useState({});
@@ -81,11 +83,13 @@ function Register() {
           const authToken = response.data.token;
           const user = response.data.user;
           // Cookies.set("userToken", authToken, { expires: 1 });
+          handleLoginSuccess(authToken, user);
           // Cookies.set("userInfo", user, { expires: 1 });
           setCookie("userToken", authToken, {
             path: "/",
             expires: expirationDate,
           }); //
+
           setCookie("userInfo", user, { path: "/", expires: expirationDate }); //
           navigate("/app");
         })
