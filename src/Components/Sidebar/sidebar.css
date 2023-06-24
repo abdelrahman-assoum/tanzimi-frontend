@@ -300,4 +300,13 @@
     .sidebar li .tooltip {
         display: none;
     }
+    .sidebar.open {
+    width: 100%;
+    }
+    .sidebar .nav-list {
+        display: none;
+    }
+    .sidebar.open .nav-list {
+        display: block;
+    }
 }

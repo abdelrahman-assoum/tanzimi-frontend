@@ -4,6 +4,12 @@
         bottom: 0;
         display: flex;
 }
+.contactButton button {
+    width: 100% !important;
+}
+.contactButton {
+    width: 100% !important;
+}
 .contactForm .heading {
     margin-bottom: 10px;
 }

@@ -10,20 +10,19 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/authProvider";
-import { TokenState } from "../../context/authProvider";
+// import { TokenState } from "../../context/authProvider";
 
 
 function Login() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["userInfo", "userToken"]);
 
-  const {handleLogin} = useContext(AuthContext)
+  const { handleLoginSuccess } = useContext(AuthContext);
 
-  const { token, setToken } = TokenState();
+  // const { token, setToken } = TokenState();
   // console.log('token', token);
   // console.log("userId", userId);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [errorMessage, setErrorMessage] = useState("");
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 1);
   // Function to validate email format
@@ -40,13 +39,11 @@ function Login() {
   const handleLoginFunction = (event) => {
     event.preventDefault();
     if (!isValidEmail(loginData.email)) {
-      setErrorMessage("Please enter a valid email");
       toast.error("Please enter a valid email");
       return;
     }
 
     if (!isValidPassword(loginData.password)) {
-      setErrorMessage("Password must be at least 8 characters long");
       toast.error("Password must be at least 8 characters long");
       return;
     }
@@ -57,9 +54,8 @@ function Login() {
         const authToken = response.data.token;
         const user = response.data.user;
         console.log(user)
-        handleLogin(authToken, user)
-       setToken(authToken);
-        setErrorMessage("");
+        handleLoginSuccess(authToken, user);
+      //  setToken(authToken);
         setCookie("userToken", authToken, {
           path: "/",
           expires: expirationDate,
@@ -80,6 +76,7 @@ function Login() {
         }
       });
   };
+
   return (
     <>
       <div className={styles.loginPage}>
@@ -130,3 +127,4 @@ function Login() {
 }
 
 export default Login;
+ 

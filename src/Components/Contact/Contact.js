@@ -64,7 +64,7 @@ function Contact() {
               Let's Connect and Take Your Productivity to the Next Level
             </span>
           </div>
-          <form style={{marginBottom: "2rem"}}>
+          <form style={{ marginBottom: "2rem" }}>
             <TextField
               id="nameinput"
               label="Your Name"
@@ -104,7 +104,9 @@ function Contact() {
               }}
               onChange={(e) => setMessage(e.target.value)}
             />
-            <Button title="Submit" onClick={handleSubmit} />
+            <div className={styles.contactButton}>
+              <Button title="Submit" onClick={handleSubmit} />
+            </div>
           </form>
         </div>
       </div>
