@@ -1,0 +1,12 @@
+.pomodoroPage {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        height: 100vh;
+}
+
+@media (max-width: 767px) {
+   .pomodoroPage {
+    flex-direction: column-reverse;
+   }
+}
