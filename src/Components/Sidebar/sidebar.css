@@ -296,7 +296,7 @@
 .sidebar .profile #profile-image {
     fill: var(--white);
 }
-@media (max-width: 420px) {
+/* @media (max-width: 420px) {
     .sidebar li .tooltip {
         display: none;
     }
@@ -309,4 +309,4 @@
     .sidebar.open .nav-list {
         display: block;
     }
-}
+} */

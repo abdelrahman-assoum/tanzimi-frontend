@@ -155,7 +155,7 @@ function PomodoroTimer(props) {
               }}
             />
           ) : (
-            <PauseButton
+          <PauseButton
               onClick={() => {
                 setIsPaused(true);
                 isPausedRef.current = true;
@@ -163,9 +163,9 @@ function PomodoroTimer(props) {
             />
           )}
         </div>
-        <div style={{ marginTop: "20px" }}>
-          <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
-        </div>
+        {/* <div style={{ marginTop: "20px" }}> */}
+          {/* <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} /> */}
+        {/* </div> */}
         {mode === "break" && (
           <div style={{ marginTop: "20px" }}>
             <p>

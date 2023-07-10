@@ -3,6 +3,7 @@ import PomodoroTimer from "../../Components/PomodoroTimer/PomodoroTimer";
 import PomodoroSettings from "../../Components/PomodoroSettings/PomodoroSettings";
 import settingsContext from "../../context/settingsContext";
 import useFetch from "../../Components/useFetch/useFetch";
+import styles from "./pomodoroPage.module.css"
 import { AuthContext } from "../../context/authProvider";
 import {
   Box,
@@ -25,7 +26,7 @@ function PomodoroPage() {
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo && userInfo?._id;
   const { data } = useFetch("/tasks/user", userId);
-  // console.log(data);
+
   let tasksList =
     data &&
     data.userTasks
@@ -63,7 +64,6 @@ function PomodoroPage() {
     setDuration(selectedDuration);
   };
 
-  // console.log(tasksList);
   return (
     <>
       <div>
@@ -81,15 +81,7 @@ function PomodoroPage() {
             setWorkMinutes,
           }}
         >
-          <div
-            className="pomodoroPage"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: 'space-around',
-              height: "100vh",
-            }}
-          >
+          <div className={styles.pomodoroPage}>
             <div className="leftSide">
               <div className="taskPicker">
                 <div className="heading">
