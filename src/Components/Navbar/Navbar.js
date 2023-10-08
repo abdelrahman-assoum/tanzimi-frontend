@@ -6,19 +6,18 @@ import { Link, NavLink } from "react-router-dom";
 function Navbar() {
   const [toggleIcon, setToggleIcon] = useState(styles.navIcon);
   const [active, setActive] = useState(styles.links);
-const handleClick = () => {
-  if (active === styles.links) {
-    setActive(`${styles.links} ${styles.navActive}`);
-  } else {
-    setActive(styles.links);
-  }
-  if (toggleIcon === styles.navIcon) {
-    setToggleIcon(`${styles.navIcon} ${styles.toggle}`);
-  } else {
-    setToggleIcon(styles.navIcon);
-  }
-};
-
+  const handleClick = () => {
+    if (active === styles.links) {
+      setActive(`${styles.links} ${styles.navActive}`);
+    } else {
+      setActive(styles.links);
+    }
+    if (toggleIcon === styles.navIcon) {
+      setToggleIcon(`${styles.navIcon} ${styles.toggle}`);
+    } else {
+      setToggleIcon(styles.navIcon);
+    }
+  };
 
   return (
     <>
@@ -30,9 +29,15 @@ const handleClick = () => {
           </div>
         </div>
         <div className={active}>
-          <a href="#home">Home</a>
-          <a href="#features">Features</a>
-          <a href="#contact">Contact</a>
+          <a href="#home" onClick={handleClick}>
+            Home
+          </a>
+          <a href="#features" onClick={handleClick}>
+            Features
+          </a>
+          <a href="#contact" onClick={handleClick}>
+            Contact
+          </a>
           <Link to="/login" className={styles.loginButton}>
             Sign In
           </Link>
