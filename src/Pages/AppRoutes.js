@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import PrivateRoutes from "./PrivateRoutes/PrivateRoutes.jsx";
 import NotFound from "./NotFound/NotFound";
 import Home from "./Home/Home";
+import Board from "./Tasks/backup.js";
 function AppRoutes() {
   return (
     <div className="appRoutes">
@@ -22,10 +23,10 @@ function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoutes />}>
-          <Route path="/logout" element={<Logout />} />
+          <Route path="/logout" element={<Logout />} />   
           <Route path="/app" element={<AppLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="tasks" element={<Tasks />} />
+            <Route path="tasks" element={<Board />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="pomodoro" element={<PomodoroPage />} />
             <Route path="goals" element={<Goals />} />
