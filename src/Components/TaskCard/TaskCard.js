@@ -6,27 +6,43 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteDialog from "../DeleteDialog/DeleteDialog";
 import EditTask from "../EditTask/EditTask";
+import { useDraggable } from "@dnd-kit/core";
 
 function TaskCard(props) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  // Apply dragging only to the drag handle (not the whole card)
+  const { setNodeRef, listeners, attributes } = useDraggable({ id: props.id });
+
+  // Handle close for delete and edit dialogs
   const handleDeleteDialogClose = () => {
     setDeleteDialogOpen(false);
   };
+
   const handleEditDialogClose = () => {
     setEditDialogOpen(false);
   };
-  const priorityData = props.priority;
 
-  const priorityOptions = [
-    { value: "Low", color: "#0080FB" }, // Blue color for Low
-    { value: "Medium", color: "#219629" }, // Green color for Medium
-    { value: "High", color: "#D60F0F" }, // Red color for High
-  ];
+  // Prevent drag when clicking on buttons, checkboxes, or other elements
+  const handleClick = (e) => {
+    e.stopPropagation(); // Prevent the drag event from firing
+  };
 
   return (
     <>
       <div className={styles.taskComponent} id={props.id}>
+        {/* Drag handle area */}
+        <div
+          ref={setNodeRef} // This is the drag handle
+          className={styles.dragHandle}
+          {...listeners} // Attach listeners to this area
+          {...attributes} // Attach attributes to this area
+        >
+          <span className={styles.dragIcon}>≡</span>{" "}
+          {/* You can replace with any drag icon */}
+        </div>
+
         <div className={styles.taskDescription}>
           <h4 className={styles.taskName}>{props.title}</h4>
           <div className={styles.taskInfo}>
@@ -55,13 +71,15 @@ function TaskCard(props) {
               ))}
           </div>
         </div>
+
         <div className={styles.taskCheck}>
+          {/* Render button based on buttonType */}
           {props.buttonType === "checkbox" ? (
             <CheckboxIcon
-            
               variant={props.status}
               taskId={props.id}
               changingStatus={props.changingStatus}
+              onClick={handleClick} // Prevent drag trigger on checkbox click
             />
           ) : props.buttonType === "edit" ? (
             <>
@@ -97,7 +115,7 @@ function TaskCard(props) {
                 deleteId={props.id}
                 dialogTitle="Task"
                 reFetching={props.changingStatus}
-                url='/tasks/delete/'
+                url="/tasks/delete/"
               />
             </div>
           ) : (
@@ -105,6 +123,7 @@ function TaskCard(props) {
               variant={props.status}
               taskId={props.id}
               changingStatus={props.changingStatus}
+              onClick={handleClick} // Prevent drag trigger on checkbox click
             />
           )}
         </div>

@@ -13,7 +13,7 @@ const PrivateRoutes = () => {
   // const { loading } = useContext(AuthContext); // Add loading from context
   // console.log(token, userInfo)
   useEffect(()=> {
-    if(!cookies.userToken && !cookies.userInfo && !token && !userInfo){
+    if(!cookies.userToken){
       navigate('/login')
       console.log("logged out")
     }

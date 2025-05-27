@@ -21,7 +21,7 @@ function Tasks() {
   const [buttonType, setButtonType] = useState("checkbox");
   const { userInfo, token } = useContext(AuthContext);
   const userId = userInfo && userInfo?._id;
-  
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -42,7 +42,7 @@ function Tasks() {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-  const { data, isLoading, reFetch } = useFetch("/tasks/user", userId && userId);
+  const { isLoading,data, reFetch } = useFetch("/tasks/user", userId && userId);
 
   const handleChangingStatus = () => {
     reFetch();
@@ -113,84 +113,86 @@ function Tasks() {
               onClose={() => setDeleteLabelOpen(false)}
             />
             <div>
-              {data && data.userTasks && data.userTasks.length === 0 ? <DataNotFound type='Tasks'/> : (
+              {data && data.userTasks && data.userTasks.length === 0 ? (
+                <DataNotFound type="Tasks" />
+              ) : (
                 <>
-            <div className={styles.Tasks}>
-              <div className={styles.ToDoTasks}>
-                {todoTask && (
-                  <TaskHeading title="To-do" counter={todoTask.length} />
-                )}
-                <div className={styles.listOfTasks}>
-                  {todoTask &&
-                    todoTask.map((e, i) => (
-                      <TaskCard
-                        key={i}
-                        id={e._id}
-                        title={e.title}
-                        dueDate={e.dueDate}
-                        duration={e.duration}
-                        status={e.status}
-                        labels={e.labels}
-                        priority={e.priority}
-                        buttonType={buttonType}
-                        changingStatus={handleChangingStatus}
-                      />
-                    ))}
-                </div>
-              </div>
-              <div className={styles.ProgressTasks}>
-                {ProgressTask && (
-                  <TaskHeading
-                    title="In-Progress"
-                    counter={ProgressTask.length}
-                  />
-                )}
-                <div className={styles.listOfTasks}>
-                  {ProgressTask &&
-                    ProgressTask.map((e, i) => (
-                      <TaskCard
-                        key={i}
-                        id={e._id}
-                        title={e.title}
-                        dueDate={e.dueDate}
-                        duration={e.duration}
-                        priority={e.priority}
-                        status={e.status}
-                        labels={e.labels}
-                        buttonType={buttonType}
-                        changingStatus={handleChangingStatus}
-                      />
-                    ))}
-                </div>
-              </div>
-              <div className={styles.DoneTasks}>
-                {DoneTask && (
-                  <TaskHeading title="Done" counter={DoneTask.length} />
-                )}
-                <div className={styles.listOfTasks}>
-                  {DoneTask &&
-                    DoneTask.map((e, i) => (
-                      <TaskCard
-                        key={i}
-                        id={e._id}
-                        title={e.title}
-                        priority={e.priority}
-                        dueDate={e.dueDate}
-                        duration={e.duration}
-                        status={e.status}
-                        labels={e.labels}
-                        buttonType={buttonType}
-                        changingStatus={handleChangingStatus}
-                      />
-                    ))}
-                </div>
-              </div>
-              </div>
-              </>
+                  <div className={styles.Tasks}>
+                    <div className={styles.ToDoTasks}>
+                      {todoTask && (
+                        <TaskHeading title="To-do" counter={todoTask.length} />
+                      )}
+                      <div className={styles.listOfTasks}>
+                        {todoTask &&
+                          todoTask.map((e, i) => (
+                            <TaskCard
+                              key={i}
+                              id={e._id}
+                              title={e.title}
+                              dueDate={e.dueDate}
+                              duration={e.duration}
+                              status={e.status}
+                              labels={e.labels}
+                              priority={e.priority}
+                              buttonType={buttonType}
+                              changingStatus={handleChangingStatus}
+                            />
+                          ))}
+                      </div>
+                    </div>
+                    <div className={styles.ProgressTasks}>
+                      {ProgressTask && (
+                        <TaskHeading
+                          title="In-Progress"
+                          counter={ProgressTask.length}
+                        />
+                      )}
+                      <div className={styles.listOfTasks}>
+                        {ProgressTask &&
+                          ProgressTask.map((e, i) => (
+                            <TaskCard
+                              key={i}
+                              id={e._id}
+                              title={e.title}
+                              dueDate={e.dueDate}
+                              duration={e.duration}
+                              priority={e.priority}
+                              status={e.status}
+                              labels={e.labels}
+                              buttonType={buttonType}
+                              changingStatus={handleChangingStatus}
+                            />
+                          ))}
+                      </div>
+                    </div>
+                    <div className={styles.DoneTasks}>
+                      {DoneTask && (
+                        <TaskHeading title="Done" counter={DoneTask.length} />
+                      )}
+                      <div className={styles.listOfTasks}>
+                        {DoneTask &&
+                          DoneTask.map((e, i) => (
+                            <TaskCard
+                              key={i}
+                              id={e._id}
+                              title={e.title}
+                              priority={e.priority}
+                              dueDate={e.dueDate}
+                              duration={e.duration}
+                              status={e.status}
+                              labels={e.labels}
+                              buttonType={buttonType}
+                              changingStatus={handleChangingStatus}
+                            />
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                </>
               )}
             </div>
           </>
-          )}
+        )}
       </div>
     </>
   );
